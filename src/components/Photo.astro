@@ -1,0 +1,58 @@
+---
+// A photo that enters blurred and monochrome and snaps into focus.
+// The <img> is always in the DOM with real alt text (SEO, screen readers, no-JS).
+import images from '../data/images.gen.json';
+import { PHOTO_BY_ID } from '../data/photos';
+import { FLAGS } from '../data/facts';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  id: string;
+  lang: Lang;
+  sizes?: string;
+  color?: boolean;
+  caption?: boolean | string;
+  credit?: boolean;
+  eager?: boolean;
+  focus?: boolean;
+  class?: string;
+  ratio?: string;
+  decorative?: boolean;
+}
+const { id, lang, sizes = '(max-width: 760px) 100vw, 50vw', color = false, caption = false, credit = false, eager = false, focus = true, class: cls = '', ratio, decorative = false } = Astro.props;
+const def = PHOTO_BY_ID[id];
+const img = (images as Record<string, { w: number; h: number; widths: number[]; color: boolean; fb: boolean; lqip: string }>)[id];
+if (!def || !img) throw new Error(`Photo ${id} is not in src/data/photos.ts / images.gen.json`);
+const hidden = def.fb && !FLAGS.fbPhotos;
+const d = t(lang) as any;
+const alt = decorative ? '' : (d.photos?.[id] ?? '');
+if (!decorative && !alt) throw new Error(`No alt text for photo ${id} in ${lang}`);
+const suffix = color && img.color ? '-c' : '';
+const base = import.meta.env.BASE_URL;
+const set = (fmt: string) => img.widths.map((w) => `${base}img/${id}-${w}${suffix}.${fmt} ${w}w`).join(', ');
+const mid = img.widths[Math.min(1, img.widths.length - 1)];
+const capText = typeof caption === 'string' ? caption : caption ? alt : '';
+---
+{!hidden && (
+  <figure class:list={['ph', cls]} style={`--lqip:url(${img.lqip});${ratio ? `aspect-ratio:${ratio};` : ''}`} data-focus-in={focus ? '' : undefined} data-fb={def.fb ? '' : undefined}>
+    <picture>
+      <source type="image/avif" srcset={set('avif')} sizes={sizes} />
+      <source type="image/webp" srcset={set('webp')} sizes={sizes} />
+      <img
+        src={`${base}img/${id}-${mid}${suffix}.webp`}
+        width={img.w}
+        height={img.h}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={eager ? 'high' : undefined}
+      />
+    </picture>
+    {(capText || credit) && (
+      <figcaption>
+        {capText}
+        {credit && <span class="credit"> {def.fb ? d.ui.creditFbShort : d.ui.creditShort}</span>}
+      </figcaption>
+    )}
+  </figure>
+)}

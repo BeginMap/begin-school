@@ -1,0 +1,9 @@
+---
+import Privacy from '../../../components/Privacy.astro';
+import type { Lang } from '../../../i18n';
+export function getStaticPaths() {
+  return (['ar', 'ru', 'en'] as const).map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+---
+<Privacy lang={lang} />

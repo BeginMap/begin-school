@@ -1,0 +1,39 @@
+---
+import { t, href, type Lang } from '../i18n';
+import { LINKS, FLAGS } from '../data/facts';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+---
+<footer class="ft sec--light">
+  <div class="wrap ft__grid">
+    <div class="ft__about">
+      <p class="ft__name">{d.footer.name}</p>
+      <p class="muted small">{d.footer.unofficial}</p>
+    </div>
+    <ul class="ft__links small" role="list">
+      <li><a href={href(lang, 'parents/')}>{d.ui.parents}</a></li>
+      <li><a href={href(lang, 'privacy/')}>{d.footer.privacy}</a></li>
+      <li><a href={LINKS.beginMap} rel="noopener"><bdi>Begin Map</bdi></a></li>
+    </ul>
+    <p class="ft__credits muted small">
+      {d.footer.credit}
+      {FLAGS.fbPhotos && <><br />{d.footer.creditFb}</>}
+      <br />{d.footer.mapData}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .ft { padding-block: 56px 72px; background: var(--paper); }
+  .ft__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: var(--gap);
+    align-items: start;
+  }
+  .ft__name { font-weight: 700; font-size: 1.15rem; margin-bottom: 0.3em; }
+  .ft__links li + li { margin-top: 0.35em; }
+  .ft__links a { display: inline-flex; min-height: 32px; align-items: center; }
+  @media (max-width: 760px) { .ft__grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,174 @@
+---
+import { LANGS, NATIVE, SHORT, DIR, t, href, type Lang, type Page } from '../i18n';
+interface Props { lang: Lang; page: Page }
+const { lang, page } = Astro.props;
+const d = t(lang);
+const other: Page = page === 'parents/' ? '' : 'parents/';
+---
+<header class="site-header" data-header>
+  <div class="hd">
+    <a class="mark" href={href(lang)} aria-label={d.ui.homeLabel}>
+      <span class="mark__name">{d.ui.mark}</span>
+      <span class="mark__city">{d.ui.city}</span>
+    </a>
+    <nav class="hd__nav" aria-label={d.ui.navLabel}>
+      <a class="hd__link" href={href(lang, other)}>{page === 'parents/' ? d.ui.kids : d.ui.parents}</a>
+      <button class="hd__motion" type="button" data-motion-toggle aria-pressed="true" title={d.ui.motionLabel}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+          <path class="wave" d="M2 12c2.5-5 5-5 7.5 0s5 5 7.5 0 3.5-4 5-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path class="flat" d="M2 12h20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="visually-hidden">{d.ui.motionLabel}</span>
+      </button>
+      <details class="lang" data-lang-menu>
+        <summary class="lang__btn" aria-label={`${d.ui.langLabel}: ${NATIVE[lang]}`}>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+          <span class="lang__cur" lang={lang}>{NATIVE[lang]}</span>
+          <span class="lang__short" lang={lang} aria-hidden="true">{SHORT[lang]}</span>
+        </summary>
+        <ul class="lang__list" role="list">
+          {LANGS.map((l) => (
+            <li>
+              <a
+                class="lang__opt"
+                href={href(l, page)}
+                hreflang={l}
+                lang={l}
+                dir={DIR[l]}
+                data-lang-link={l}
+                aria-current={l === lang ? 'true' : undefined}
+              >{NATIVE[l]}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 -30px;
+    background: linear-gradient(to bottom, rgba(12, 12, 11, 0.82), rgba(12, 12, 11, 0.5) 60%, rgba(12, 12, 11, 0));
+    pointer-events: none;
+    transition: opacity var(--dur-2) linear;
+  }
+  :global(html[data-on-light='1']) .site-header::before {
+    background: linear-gradient(to bottom, rgba(236, 235, 231, 0.92), rgba(236, 235, 231, 0.6) 60%, rgba(236, 235, 231, 0));
+  }
+  :global(html[data-on-light='1']) .site-header { color: #141413; --focus: #141413; }
+  .hd {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: var(--header-h);
+    padding-inline: var(--pad);
+    max-width: calc(var(--max) + 2 * var(--pad));
+    margin-inline: auto;
+  }
+  .hd > * { pointer-events: auto; }
+  .mark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    text-decoration: none;
+    min-height: 44px;
+    align-items: center;
+  }
+  .mark__name {
+    font-weight: var(--display-weight);
+    font-style: var(--display-style);
+    font-size: 1.45rem;
+    letter-spacing: var(--track-display);
+  }
+  .mark__city { font-size: 0.95rem; color: var(--fg-muted); }
+  :global(html[data-on-light='1']) .mark__city { color: #4f4d48; }
+  .hd__nav { display: flex; align-items: center; gap: 4px; }
+  .hd__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 999px;
+  }
+  .hd__link:hover { text-decoration: underline; }
+  .hd__motion, .lang__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 10px;
+    border: 0;
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .hd__motion:hover, .lang__btn:hover { background: rgba(127, 127, 127, 0.16); }
+  .hd__motion .flat { opacity: 0; }
+  .hd__motion[aria-pressed='false'] .wave { opacity: 0; }
+  .hd__motion[aria-pressed='false'] .flat { opacity: 1; }
+  .lang { position: relative; }
+  .lang__btn { list-style: none; font-weight: 500; }
+  .lang__btn::-webkit-details-marker { display: none; }
+  .lang__short { display: none; }
+  .lang__list {
+    position: absolute;
+    inset-inline-end: 0;
+    top: calc(100% + 6px);
+    min-width: 180px;
+    padding: 6px;
+    background: #f2f0eb;
+    color: #141413;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    transform-origin: top var(--origin, right);
+    --focus: #141413;
+  }
+  [dir='ltr'] .lang__list { --origin: right; }
+  [dir='rtl'] .lang__list { --origin: left; }
+  .lang[open] .lang__list { animation: menu-in var(--dur-2) var(--ease-focus); }
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(-6px) scale(0.96); filter: blur(4px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+  .lang__opt {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding-inline: 14px;
+    font-size: 1.08rem;
+    text-decoration: none;
+    border-radius: 10px;
+  }
+  .lang__opt:hover { background: rgba(20, 20, 19, 0.08); }
+  .lang__opt[aria-current='true'] { font-weight: 700; }
+  .lang__opt[aria-current='true']::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    margin-inline-start: auto;
+    border-radius: 50%;
+    background: var(--sail);
+  }
+  @media (max-width: 560px) {
+    .lang__cur { display: none; }
+    .lang__short { display: inline; }
+    .mark__city { display: none; }
+    .hd__link { padding-inline: 8px; font-size: 0.95rem; }
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+import { t, type Lang } from '../i18n';
+import { FACTS } from '../data/facts';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+---
+<section class="sec hero" data-field="hero" aria-labelledby="hero-title">
+  <div class="wrap hero__in">
+    <h1 id="hero-title" class="hero__title">
+      {d.hero.title.map((line, i) => <span class="hero__line" style={`--i:${i}`}>{line}</span>)}
+    </h1>
+    <div class="hero__foot">
+      <p class="hero__lead">{d.hero.lead}</p>
+      <a class="hero__hint" href="#years">
+        <span>{d.hero.hint}</span>
+        <span class="hero__arrow" aria-hidden="true"></span>
+      </a>
+    </div>
+    <p class="hero__name" lang="he" dir="rtl">{FACTS.fullName.value}</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    padding-block: calc(var(--header-h) + 6vh) clamp(36px, 7vh, 72px);
+  }
+  .hero__in {
+    position: relative;
+    display: grid;
+    gap: clamp(28px, 5vh, 56px);
+  }
+  .hero__title {
+    font-size: var(--fs-hero);
+    font-style: var(--display-style);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--track-display);
+    line-height: var(--lh-tight);
+    margin: 0;
+    text-wrap: balance;
+    text-shadow: 0 0 40px rgba(12, 12, 11, 0.55);
+  }
+  .hero__line { display: block; }
+  .hero__line + .hero__line { padding-inline-start: 0.6em; }
+  :global(html[data-motion='on']) .hero__line {
+    animation: hero-focus 1.25s var(--ease-focus) both;
+    animation-delay: calc(var(--i) * 160ms);
+  }
+  :global(html.intro-skip) .hero__line { animation: none; }
+  @keyframes hero-focus {
+    from { filter: blur(18px); opacity: 0.25; transform: translateY(0.12em) scale(1.02); }
+    to { filter: blur(0); opacity: 1; transform: none; }
+  }
+  .hero__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 48px;
+  }
+  .hero__lead {
+    margin: 0;
+    font-size: var(--fs-lead);
+    line-height: 1.45;
+    max-width: 32ch;
+    padding: 18px 22px;
+    margin-inline-start: -22px;
+    background: radial-gradient(closest-side, rgba(12, 12, 11, 0.72), rgba(12, 12, 11, 0.35) 75%, transparent);
+  }
+  :lang(ar) .hero__lead { line-height: 1.75; }
+  .hero__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 48px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--fg-muted);
+  }
+  .hero__hint:hover { color: var(--fg); }
+  .hero__arrow {
+    position: relative;
+    width: 1.5px;
+    height: 44px;
+    background: currentColor;
+    overflow: hidden;
+  }
+  .hero__arrow::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: -40%;
+    height: 40%;
+    background: var(--fg);
+    animation: drip 2.2s var(--ease-move) infinite;
+  }
+  @keyframes drip { to { top: 100%; } }
+  .hero__name {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--fg-faint);
+    justify-self: start;
+  }
+  [dir='ltr'] .hero__name { justify-self: end; }
+</style>

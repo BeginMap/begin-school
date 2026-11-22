@@ -1,0 +1,516 @@
+{
+  "meta": {
+    "siteName": "Begin, Eilat — meet the school",
+    "title": "Hi, future 7th grader! Begin school in Eilat",
+    "description": "Meet Begin school in Eilat — for kids starting 7th grade (ז׳) in September and their parents: how the school works, what a day looks like, where everything is.",
+    "ogAlt": "The Begin school courtyard with its three red shade sails",
+    "parentsTitle": "For parents — Begin school, Eilat",
+    "parentsDescription": "Starting 7th grade at Begin school in Eilat: how the school is organised, safety, getting there, registration, and what we are still checking with the school.",
+    "privacyTitle": "Privacy — Begin school, Eilat",
+    "privacyDescription": "This site uses no cookies, collects no data and runs no trackers."
+  },
+  "ui": {
+    "skip": "Skip to content",
+    "homeLabel": "Begin — home",
+    "mark": "Begin",
+    "city": "Eilat",
+    "navLabel": "Main menu",
+    "parents": "For parents",
+    "kids": "For students",
+    "motionLabel": "Animation",
+    "motionOn": "Animation on",
+    "motionOff": "Animation off",
+    "langLabel": "Language",
+    "suggest": "This site is available in English.",
+    "suggestYes": "Read in English",
+    "suggestNo": "No, thanks",
+    "creditShort": "Photo: Begin Map",
+    "creditFbShort": "Photo: Facebook",
+    "close": "Close",
+    "openPhoto": "Open photo: {name}",
+    "photoCount": "{n} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "newTab": "opens in a new tab",
+    "scrollHint": "Scroll down",
+    "toTop": "Back to top"
+  },
+  "hero": {
+    "title": [
+      "Hi there,",
+      "future 7th grader"
+    ],
+    "lead": "At first, a new school is a bit of a blur: a big building, lots of teachers, no idea what's where. Scroll down — every screen gets a little sharper.",
+    "hint": "Scroll down"
+  },
+  "years": {
+    "title": "Six years, one school",
+    "lead": "Begin runs from 7th grade (ז׳) to 12th (י״ב). After 9th grade you don't switch schools — you just move up to the upper school.",
+    "now": "you are here now",
+    "soon": "here in September",
+    "small": [
+      "now",
+      "year 1",
+      "year 2",
+      "year 3",
+      "year 4",
+      "year 5",
+      "year 6"
+    ],
+    "stage1": {
+      "name": "Middle school",
+      "sub": "חטיבת ביניים, grades ז׳–ט׳",
+      "text": "A building of its own: its own entrance, its own office, its own teachers' room and counsellors."
+    },
+    "stage2": {
+      "name": "Upper school",
+      "sub": "חטיבה עליונה, grades י׳–י״ב",
+      "text": "This is where you choose a major (מגמה) and prepare for the בגרות exams. That's a long way off — for now, just know the whole road runs through here."
+    }
+  },
+  "changes": {
+    "title": "What changes after 6th grade",
+    "lead": "Lots of things will be new. That's true for everyone moving up to 7th grade — and it's completely fine.",
+    "was": "before",
+    "now": "now",
+    "items": [
+      {
+        "was": "One teacher for almost the whole day.",
+        "now": "Lots of teachers, each with their own subject."
+      },
+      {
+        "was": "Your homeroom teacher is always around.",
+        "now": "Every class has a מחנך or מחנכת — a homeroom teacher. You'll see them less in lessons, but they're your grown-up at school: you can go to them with any question."
+      },
+      {
+        "was": "When things are hard, you go to your teacher.",
+        "now": "There's a יועצת — a school counsellor. You can talk to her when something is hard, scary or just confusing."
+      },
+      {
+        "was": "Your teacher knows the timetable.",
+        "now": "You get your own מערכת שעות — your timetable. It looks complicated in week one; after that you get used to it."
+      },
+      {
+        "was": "You've known your whole class since 1st grade.",
+        "now": "Classes are made of kids from different schools. At first almost everyone is a stranger — and they don't know anyone either."
+      },
+      {
+        "was": "Quizzes and your teacher's feedback.",
+        "now": "Tests (מבחנים) and a תעודה — a report card with grades."
+      }
+    ],
+    "outro": "In the first weeks everybody gets a bit lost. A month later you'll be the one showing others the way."
+  },
+  "day": {
+    "title": "A day at Begin",
+    "lead": "The school will announce the bell times. For now, let's just walk through the places where the day happens.",
+    "progress": "Where we are",
+    "steps": [
+      {
+        "title": "Morning. The gate",
+        "text": "You come in from Malkat Shva Street (מלכת שבא). Above the gate is a sign with a portrait of Menachem Begin — the school is named after him."
+      },
+      {
+        "title": "The courtyard",
+        "text": "A big inner courtyard: grass, benches and three red shade sails. Straight ahead is the entrance to the middle school."
+      },
+      {
+        "title": "Lesson time",
+        "text": "Classrooms have names, not just numbers. This door says דולפין — dolphin."
+      },
+      {
+        "title": "Break",
+        "text": "Shade under the sails, picnic tables, a chess table under the leaning tree. There's a kiosk in the courtyard too."
+      },
+      {
+        "title": "The library",
+        "text": "A quiet place full of books, right behind the middle school lobby."
+      },
+      {
+        "title": "Sport",
+        "text": "The “Toto Pais” sports hall (טוטו פיס) and a sports court next to the school."
+      },
+      {
+        "title": "Home",
+        "text": "The bus stop “תיכון בגין / מלכת שבא” is right by the school."
+      }
+    ]
+  },
+  "campus": {
+    "title": "The whole school, in lines",
+    "lead": "This is the real plan of Begin: building outlines and heights come from the Begin Map. Scroll and the plan turns. Tap a glowing dot to see a photo of that spot.",
+    "hint": "The dots on the plan are photos",
+    "listTitle": "Places on the plan",
+    "source": "Plan and data: Begin Map",
+    "labels": {
+      "htb": "Middle school",
+      "hta": "Upper school",
+      "library": "Library",
+      "yard": "Courtyard",
+      "eshkol": "Eshkol HaPais hall",
+      "gym": "Sports hall",
+      "court": "Sports court"
+    },
+    "spots": {
+      "gate": "Main gate",
+      "garden": "Garden and steps behind the gate",
+      "street": "Bus stop and street",
+      "yard": "Inner courtyard",
+      "courtyard": "Courtyard by the middle school",
+      "courtyardEast": "East side of the courtyard",
+      "eshkol": "Eshkol HaPais hall",
+      "pis": "“Toto Pais” sports hall",
+      "gymIn": "Inside the sports hall",
+      "court": "Sports court",
+      "htbHall": "Middle school lobby at Purim",
+      "party": "A celebration in the courtyard"
+    }
+  },
+  "names": {
+    "title": "Every classroom has a name",
+    "lead": "Here classrooms aren't just numbers. The door signs show birds, flowers, sea creatures, trees, places in the Negev and heroes of the Tanakh. Maybe your class will be called דולפין — Dolphin.",
+    "hint": "Tap a name to find out what it means.",
+    "doorCaption": "This is the door of the דולפין classroom.",
+    "plaquesCaption": "Door signs: כלנית, אירוס, נרקיס, חצב, צבעוני.",
+    "showOnMap": "Show in Begin Map",
+    "groups": {
+      "birds": "Birds",
+      "flowers": "Flowers",
+      "sea": "The sea",
+      "trees": "Trees and shrubs",
+      "desert": "Negev and Arava",
+      "tanakh": "Heroes of the Tanakh",
+      "sky": "The sky"
+    },
+    "meanings": {
+      "dror": "sparrow",
+      "tzofit": "sunbird — a tiny bird with a curved beak",
+      "anafa": "heron",
+      "afroni": "lark",
+      "shachaf": "seagull",
+      "agur": "crane",
+      "kalanit": "anemone, a red winter flower",
+      "iris": "iris",
+      "nurit": "buttercup",
+      "vered": "rose",
+      "narkis": "narcissus",
+      "hatzav": "sea squill — it blooms at the end of summer",
+      "tzvoni": "tulip",
+      "marganit": "scarlet pimpernel, a tiny wildflower",
+      "lilach": "lilac",
+      "rakefet": "cyclamen",
+      "sachlav": "orchid",
+      "yasmin": "jasmine",
+      "karkom": "crocus",
+      "dolphin": "dolphin",
+      "tochnit": "parrotfish",
+      "zaharon": "lionfish",
+      "halil": "cornetfish",
+      "solit": "sole, a flat fish",
+      "shonit": "reef",
+      "rotem": "white broom, a desert shrub",
+      "eshel": "tamarisk",
+      "shita": "acacia",
+      "dekel": "palm tree",
+      "tamar": "date palm",
+      "hadas": "myrtle",
+      "ela": "terebinth tree",
+      "arava": "the Arava valley",
+      "zion": "Nahal Zin, a stream in the Negev",
+      "paran": "Nahal Paran, a stream in the Negev",
+      "netafim": "Nahal Netafim, near Eilat",
+      "ramon": "the Ramon crater",
+      "shchorot": "Nahal Shchoret, near Eilat",
+      "rudad": "Nahal Roded, near Eilat",
+      "dvora": "Deborah — a prophet and judge",
+      "barak": "Barak — a military leader",
+      "ahud": "Ehud — a judge",
+      "yiftach": "Jephthah — a judge",
+      "yotam": "Jotham — son of Gideon",
+      "kfir": "lion cub; also an Israeli jet",
+      "lavi": "lion; also an Israeli jet",
+      "adir": "mighty; the Israeli Air Force name for the F-35",
+      "yasur": "petrel, a seabird; also an Air Force helicopter"
+    }
+  },
+  "life": {
+    "title": "School life",
+    "lead": "Celebrations, performances, sport and ceremonies. This is what it looked like at Begin.",
+    "boards": "The corridors have boards about art, music, books and sport.",
+    "arts": "According to public sources, the school's special majors include dance and music. Please check the current list of majors (מגמות) with the school.",
+    "drag": "Swipe through the photos"
+  },
+  "map": {
+    "title": "You won't get lost",
+    "lead": "Begin has its own map — the Begin Map. Type the name of a classroom and it guides you from the entrance to the door.",
+    "features": [
+      "Search by classroom name",
+      "Routes inside the school",
+      "The nearest safe room (ממ״ד)",
+      "A 3D view of the whole school"
+    ],
+    "cta": "Find your classroom",
+    "qr": "Or point your phone camera at the code",
+    "qrAlt": "QR code linking to the Begin Map",
+    "routeCaption": "A real route from the Begin Map: from the main entrance to the דולפין classroom.",
+    "phoneAlt": "A phone showing the school map and a route to a classroom"
+  },
+  "safe": {
+    "title": "It's safe here",
+    "lead": "Short and calm — the important things.",
+    "items": [
+      {
+        "title": "4 safe rooms",
+        "text": "The school has four safe rooms (ממ״ד): in the library, in the middle school and two in the upper school. The Begin Map shows the nearest one."
+      },
+      {
+        "title": "Evacuation plan",
+        "text": "The school has an earthquake evacuation plan with assembly points."
+      },
+      {
+        "title": "A sign at the gate",
+        "text": "“This school has a safe room open to the public” — that's what the sign at the entrance says."
+      },
+      {
+        "title": "Who to go to",
+        "text": "If something happens or you feel scared — go to your מחנך, the יועצת or the school office."
+      }
+    ],
+    "mapCaption": "Dots: the four safe rooms. Dashed lines: assembly points from the evacuation plan.",
+    "quake": "Evacuation plan in Begin Map",
+    "shelter": "Nearest safe room in Begin Map"
+  },
+  "getting": {
+    "title": "Getting here",
+    "lead": "The school is on Malkat Shva Street (מלכת שבא). The bus stop is right by the school.",
+    "items": [
+      {
+        "title": "Bus stop",
+        "text": "It's called “תיכון בגין / מלכת שבא”."
+      },
+      {
+        "title": "The gate",
+        "text": "The main entrance, with the school sign and a portrait of Menachem Begin."
+      },
+      {
+        "title": "Parking",
+        "text": "There's parking by the gate, with accessible spaces."
+      }
+    ],
+    "address": "Malkat Shva Street (מלכת שבא), Eilat",
+    "google": "Open in Google Maps",
+    "waze": "Open in Waze",
+    "mapsNote": "Both links lead to the main gate."
+  },
+  "faq": {
+    "title": "Questions",
+    "kidsTitle": "For students",
+    "parentsTitle": "For parents",
+    "kids": [
+      {
+        "q": "What if I get lost?",
+        "a": "Everyone gets a bit lost in the first days. Ask any teacher or older student. You can also open the Begin Map on your phone: type the classroom name and it shows you the way."
+      },
+      {
+        "q": "Will my friends from my school be there?",
+        "a": "Begin takes kids from different elementary schools in Eilat, so you'll probably see some familiar faces. The school decides who goes into which class. And new friends come quickly: everyone around you is new too."
+      },
+      {
+        "q": "Who is my grown-up at school?",
+        "a": "Your homeroom teacher — the מחנך or מחנכת. There's also the יועצת, the school counsellor: you can talk to her about anything."
+      },
+      {
+        "q": "When are the bells, and how many lessons?",
+        "a": "The school will publish the bell times. You'll get your own timetable (מערכת שעות) at the start of the year."
+      },
+      {
+        "q": "What should I bring on the first day?",
+        "a": "The school will send a list. And in Eilat a bottle of water is always a good idea."
+      }
+    ],
+    "parents": [
+      {
+        "q": "How is a child placed in 7th grade?",
+        "a": "Under Ministry of Education rules, the local authority assigns pupils to middle schools and notifies parents. Please check the procedure and dates for Eilat with the municipality and the school.",
+        "link": "Eilat municipality registration page"
+      },
+      {
+        "q": "How do I contact the school?",
+        "a": "The Eilat municipality's list of schools gives Begin's phone number as {phone}.",
+        "link": "Municipality list of schools"
+      },
+      {
+        "q": "Is there support for new immigrants?",
+        "a": "The school plan shows a room called “אולפן” (ulpan). Please check with the school how support for newly arrived students works today."
+      },
+      {
+        "q": "How safe is the school?",
+        "a": "There are four safe rooms (ממ״ד) and an earthquake evacuation plan. A sign at the gate says the school has a safe room open to the public."
+      },
+      {
+        "q": "How will my child get there?",
+        "a": "The bus stop “תיכון בגין / מלכת שבא” is right by the school. There's parking by the gate, with accessible spaces."
+      }
+    ]
+  },
+  "finale": {
+    "title": "See you in September",
+    "lead": "Now the school is in focus. You'll discover the rest on your very first day.",
+    "cta": "Find your classroom in Begin Map",
+    "parentsCta": "For parents",
+    "phone": "School phone, from the municipality list: {phone}",
+    "address": "Malkat Shva Street (מלכת שבא), Eilat"
+  },
+  "footer": {
+    "name": "Begin, Eilat — meet the school",
+    "unofficial": "This site was made by the Begin Map team and is not the school's official website. Please check details with the school.",
+    "privacy": "Privacy",
+    "credit": "Photos and plan: Begin Map.",
+    "creditFb": "Event photos come from Facebook posts; faces are blurred.",
+    "mapData": "Building outlines and route: Begin Map data."
+  },
+  "parents": {
+    "h1": "For parents",
+    "lead": "Everything important about starting 7th grade, in short. Where something hasn't been confirmed by the school yet, we say so.",
+    "school": {
+      "title": "The school",
+      "text": "Begin High School (בית ספר תיכון ע״ש מנחם בגין), Eilat, is a six-year state school (ממלכתי), named after Menachem Begin, Israel's sixth Prime Minister. It has two parts: the middle school (חטיבת ביניים, grades ז׳–ט׳) in its own building with its own entrance and office, and the upper school (חטיבה עליונה, grades י׳–י״ב)."
+    },
+    "transition": {
+      "title": "What changes in 7th grade",
+      "text": "Instead of one class teacher there are subject teachers. Each class has a homeroom teacher (מחנך/מחנכת), and the school has counsellors (יועצות). Students get a personal timetable (מערכת שעות), tests and a report card (תעודה). Classes are made up of children from different elementary schools.",
+      "tips": [
+        "Ask your child what worries them most — often it's something small, like “where are the toilets?”",
+        "Walk the way from home to the gate together before the year starts.",
+        "Open the Begin Map together and find the key places: the middle school entrance, the library, the safe room."
+      ]
+    },
+    "registration": {
+      "title": "Registration and placement",
+      "text": "Under the Ministry of Education circular (0386), the local authority assigns elementary school graduates to middle schools and notifies parents. Please check how and when this works in Eilat this year with the municipality and the school.",
+      "link": "Municipality registration page"
+    },
+    "safety": {
+      "title": "Safety",
+      "text": "Four safe rooms (ממ״ד): in the library, in the middle school and two in the upper school. An earthquake evacuation plan with assembly points. At the main gate, a sign about a safe room open to the public."
+    },
+    "route": {
+      "title": "Getting there",
+      "text": "Malkat Shva Street (מלכת שבא). The bus stop “תיכון בגין / מלכת שבא” is right by the school. Parking by the gate, with accessible spaces.",
+      "addressNote": "Sources give different house numbers (2 and 28) — we're checking with the school."
+    },
+    "olim": {
+      "title": "For new immigrants",
+      "text": "The school plan shows a room called “אולפן” (ulpan). Whether there is currently a Hebrew programme and support for new students — please ask the school. This site is also available in Russian and Arabic, so feel free to share it."
+    },
+    "contacts": {
+      "title": "Contact",
+      "text": "School phone, from the list of schools on the Eilat municipality website: {phone}.",
+      "link": "Municipality list of schools"
+    },
+    "pending": {
+      "title": "What we are still checking with the school",
+      "lead": "These answers will appear here once confirmed:",
+      "items": [
+        "bell times and the length of the school day",
+        "whether there are ability groups (הקבצות) in maths and English",
+        "whether students change rooms between lessons",
+        "a welcome day for new students",
+        "uniform (תלבושת אחידה) and what to bring on day one",
+        "registration dates and procedure in Eilat",
+        "the current list of majors and programmes, including “פלדה כחולה”",
+        "the exact address"
+      ]
+    },
+    "faqTitle": "Frequent questions"
+  },
+  "privacy": {
+    "h1": "Privacy",
+    "lead": "In short: we don't collect anything about you.",
+    "items": [
+      {
+        "title": "No cookies, no tracking",
+        "text": "The site sets no cookies and uses no analytics, ads or visit counters."
+      },
+      {
+        "title": "No forms",
+        "text": "There are no forms that collect information about children or adults."
+      },
+      {
+        "title": "What your browser stores",
+        "text": "Only two of your choices — language and “animation on/off”. They stay in your browser's localStorage and are never sent anywhere. Clearing the site's data removes them."
+      },
+      {
+        "title": "Fonts and images",
+        "text": "Everything loads from this site itself, with no third-party servers."
+      },
+      {
+        "title": "External links",
+        "text": "Links to Google Maps, Waze, the Begin Map and the municipality website lead to other sites with their own rules."
+      },
+      {
+        "title": "Hosting",
+        "text": "The site is hosted on GitHub Pages. GitHub may keep technical logs (such as IP addresses) under its own privacy policy."
+      }
+    ],
+    "contact": "Questions about the site can be asked in the project's GitHub repository."
+  },
+  "notFound": {
+    "title": "It's foggy here",
+    "text": "This page doesn't exist.",
+    "home": "Go to the home page"
+  },
+  "photos": {
+    "gate-1": "The school's main entrance: gate, sign and paved square",
+    "gate-2": "The main gate with the school sign and a portrait of Menachem Begin",
+    "gate-5": "A wall by the entrance with the words “בית ספר תיכון מקיף” and a flowerbed",
+    "gate-6": "Parking by the gate, with accessible spaces",
+    "gate-8": "A gate with a yellow sign saying the school has a safe room open to the public",
+    "gate-9": "Behind the gate: a stone flowerbed, palm trees and steps",
+    "gate-10": "Steps with handrails in the garden behind the gate",
+    "street-1": "The bus stop by the school on Malkat Shva Street",
+    "street-4": "The bus stop sign “תיכון בגין / מלכת שבא”",
+    "street-7": "The school building seen from across Malkat Shva Street",
+    "courtyard-north": "The inner courtyard: grass, benches, three red shade sails and the middle school entrance",
+    "courtyard-east": "East side of the courtyard: a stone table, trees and yellow lamp posts",
+    "yard-1": "The courtyard and the entrance to the middle school building",
+    "yard-3": "Red shade sails, picnic tables and a yellow lamp post in the courtyard",
+    "yard-5": "Picnic tables in the shade of a red sail",
+    "yard-9": "The courtyard square and the entrance to the upper school",
+    "yard-10": "The entrance to the upper school",
+    "yard-13": "Grass, the leaning tree and steps on the west side of the courtyard",
+    "yard-14": "A chess table under the leaning tree, and a red shade sail",
+    "yard-15": "The courtyard square, yellow lamp posts and trees",
+    "eshkol-3": "The foyer of the Eshkol HaPais hall",
+    "eshkol-4": "The foyer and entrance of the Eshkol HaPais hall",
+    "pis-1": "The entrance to the “Toto Pais” sports hall",
+    "pis-2": "The square in front of the sports hall",
+    "ev-1": "The “Opening the summer at Begin” celebration: flags in the courtyard",
+    "ev-6": "Prizes for the raffle at the celebration",
+    "ev-8": "Confetti over the courtyard during the celebration",
+    "hall-2": "A dance performance in the sports hall",
+    "hall-3": "An awards ceremony in the sports hall",
+    "hall-4": "The ceremony table with the words “טקס מצטיינים תיכון בגין”",
+    "court-2": "A wheelchair challenge on the sports court",
+    "court-3": "Football on the sports court",
+    "htb-1": "Purim: a decorated middle school corridor",
+    "htb-2": "Purim: the corridor to the library",
+    "htb-3": "Purim: a poster by the library entrance",
+    "eshkol-1": "A performance on the stage of the Eshkol HaPais hall",
+    "eshkol-2": "A memorial ceremony in the Eshkol HaPais hall",
+    "door-dolphin": "The door of the דולפין classroom with a dolphin drawing",
+    "wall-marganit": "The wall by the מרגנית classroom with a flower and birds",
+    "board-books": "A board about books in the corridor",
+    "board-art": "A board about art in the corridor",
+    "board-music": "A board about music in the corridor",
+    "board-sport": "A board about Israeli athletes",
+    "wall-words": "A wall of words about values",
+    "wall-music": "An embroidery with a violin and musical notes",
+    "plaque-kalanit": "The sign of the כלנית classroom",
+    "plaque-iris": "The sign of the אירוס classroom",
+    "plaque-narkis": "The sign of the נרקיס classroom",
+    "plaque-hatzav": "The sign of the חצב classroom",
+    "plaque-tzivoni": "The sign of the צבעוני classroom",
+    "plan-route": "The school plan around the route from the entrance to the דולפין classroom"
+  }
+}

@@ -1,0 +1,148 @@
+---
+import { t, type Lang } from '../i18n';
+import Photo from './Photo.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-books', 'pis-1', 'street-1'];
+---
+<section class="sec day" id="day" data-field="day" aria-labelledby="day-title">
+  <div class="wrap day__head scrim">
+    <h2 id="day-title" class="h2" data-kt>{d.day.title}</h2>
+    <p class="lead">{d.day.lead}</p>
+  </div>
+
+  <div class="day__pin" data-day>
+    <ol class="day__track" role="list" data-day-track>
+      {d.day.steps.map((s, i) => (
+        <li class="day__step" style={`--i:${i}`}>
+          <Photo id={photos[i]} lang={lang} class="day__ph" sizes="(max-width: 760px) 86vw, 46vw" />
+          <div class="day__txt">
+            <h3 class="day__t"><span class="day__n" aria-hidden="true">{i + 1}</span>{s.title}</h3>
+            <p>{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="day__bar wrap" aria-hidden="true">
+      <span class="day__bar-line"><span class="day__bar-fill" data-day-fill></span></span>
+      {d.day.steps.map((_, i) => <span class="day__tick" style={`--p:${i / (d.day.steps.length - 1)}`}></span>)}
+      <span class="day__you" data-day-you></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .day { padding-bottom: clamp(48px, 8vh, 96px); }
+  .day__head { max-width: 46rem; margin-bottom: clamp(32px, 6vh, 64px); }
+  .day__head .lead { margin-top: 1em; }
+
+  /* Default (no JS, reduced motion): a calm vertical stack */
+  .day__track {
+    display: grid;
+    gap: clamp(40px, 8vh, 88px);
+    padding-inline: var(--pad);
+    max-width: calc(var(--max) + 2 * var(--pad));
+    margin-inline: auto;
+  }
+  .day__step {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(20px, 3vw, 48px);
+    align-items: end;
+  }
+  .day__step:nth-child(even) .day__ph { order: 2; }
+  .day__ph { aspect-ratio: 4 / 3; border-radius: var(--radius); }
+  .day__txt { padding-block-end: 8px; }
+  .day__txt p { color: var(--fg-muted); margin: 0.6em 0 0; max-width: 34ch; }
+  .day__t {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-size: var(--fs-h3);
+    font-weight: 750;
+    font-style: var(--display-style);
+  }
+  .day__n {
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--fg-faint);
+    min-width: 1.2em;
+  }
+  .day__bar { display: none; }
+
+  /* Pinned horizontal ride (JS adds .is-ride) */
+  :global(.day__pin.is-ride) {
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  :global(.day__pin.is-ride) .day__track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: clamp(28px, 5vw, 80px);
+    width: max-content;
+    max-width: none;
+    margin: 0;
+    padding-inline: var(--pad) 30vw;
+    will-change: transform;
+  }
+  :global(.day__pin.is-ride) .day__step {
+    width: min(62vw, 760px);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  :global(.day__pin.is-ride) .day__step:nth-child(even) .day__ph { order: 0; }
+  :global(.day__pin.is-ride) .day__step:nth-child(even) { margin-top: 9vh; }
+  :global(.day__pin.is-ride) .day__ph { aspect-ratio: 16 / 10; max-height: 52svh; }
+  :global(.day__pin.is-ride) .day__bar {
+    display: block;
+    position: relative;
+    height: 28px;
+    margin-top: clamp(20px, 4vh, 40px);
+  }
+  .day__bar-line {
+    position: absolute;
+    inset-inline: var(--pad);
+    top: 50%;
+    height: 1.5px;
+    background: var(--line);
+  }
+  .day__bar-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--fg);
+    transform-origin: var(--o, left);
+    transform: scaleX(0);
+  }
+  [dir='rtl'] .day__bar-fill { --o: right; }
+  .day__tick {
+    position: absolute;
+    top: calc(50% - 5px);
+    inset-inline-start: calc(var(--pad) + (100% - 2 * var(--pad)) * var(--p) - 1px);
+    width: 2px;
+    height: 10px;
+    background: var(--fg-muted);
+  }
+  .day__you {
+    position: absolute;
+    top: calc(50% - 7px);
+    inset-inline-start: calc(var(--pad) - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sail);
+    box-shadow: 0 0 0 6px rgba(201, 54, 47, 0.22);
+    transform: translateX(var(--yx, 0px));
+  }
+  @media (max-width: 760px) {
+    .day__step { grid-template-columns: 1fr; }
+    .day__step:nth-child(even) .day__ph { order: 0; }
+    :global(.day__pin.is-ride) .day__step { width: 84vw; }
+    :global(.day__pin.is-ride) .day__step:nth-child(even) { margin-top: 0; }
+    :global(.day__pin.is-ride) .day__ph { aspect-ratio: 4 / 3; max-height: 46svh; }
+  }
+</style>

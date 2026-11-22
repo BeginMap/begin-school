@@ -1,0 +1,124 @@
+---
+import QRCode from 'qrcode';
+import { t, type Lang } from '../i18n';
+import { LINKS } from '../data/facts';
+import campus from '../data/campus.json';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const base = import.meta.env.BASE_URL;
+const qr = await QRCode.toString(LINKS.beginMap, { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#141413', light: '#0000' } });
+// crop of the plan shown inside the phone (plan px) — matches 'plan-route' in src/data/photos.ts
+const vb = { x: 700, y: 560, w: 440, h: 920 };
+const route = campus.route as number[][];
+const d0 = route.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('');
+const [ex, ey] = route[route.length - 1];
+const [sx, sy] = route[0];
+---
+<section class="sec bm" id="beginmap" data-field="map" aria-labelledby="bm-title">
+  <div class="wrap bm__grid">
+    <div class="bm__phone" data-bm-phone>
+      <div class="phone">
+        <div class="phone__bar">
+          <img src={`${base}img/beginmap-icon.webp`} width="28" height="28" alt="" />
+          <span class="phone__search" lang="he" dir="rtl">דולפין</span>
+        </div>
+        <svg class="phone__map" viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`} role="img" aria-label={d.map.phoneAlt} preserveAspectRatio="xMidYMid slice">
+          <image href={`${base}img/plan-route-440.webp`} x={vb.x} y={vb.y} width={vb.w} height={vb.h} preserveAspectRatio="none" />
+          <rect x={vb.x} y={vb.y} width={vb.w} height={vb.h} fill="rgba(12,12,11,0.28)" />
+          <path class="route route--ghost" d={d0} />
+          <path class="route" d={d0} pathLength="1" data-route />
+          <circle cx={sx} cy={sy} r="7" class="route__start" />
+          <g class="route__end" transform={`translate(${ex} ${ey})`}>
+            <circle r="9" />
+            <text x="0" y="-18" text-anchor="middle" lang="he">דולפין</text>
+          </g>
+          <circle r="8" class="route__you" cx={sx} cy={sy} data-route-you />
+        </svg>
+      </div>
+      <p class="cap bm__cap">{d.map.routeCaption}</p>
+    </div>
+
+    <div class="bm__text">
+      <h2 id="bm-title" class="h2" data-kt>{d.map.title}</h2>
+      <p class="lead">{d.map.lead}</p>
+      <ul class="bm__feat" role="list">
+        {d.map.features.map((f) => <li>{f}</li>)}
+      </ul>
+      <div class="bm__act">
+        <a class="btn btn--sail bm__cta" href={LINKS.beginMap} rel="noopener" data-magnetic>
+          {d.map.cta}
+          <svg class="flip" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        </a>
+        <div class="bm__qr">
+          <div class="qr" role="img" aria-label={d.map.qrAlt} set:html={qr} />
+          <p class="small muted">{d.map.qr}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bm__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 7vw, 120px);
+    align-items: center;
+  }
+  .bm__phone { justify-self: center; width: min(320px, 78vw); }
+  .phone {
+    position: relative;
+    aspect-ratio: 9 / 18.5;
+    border-radius: 42px;
+    padding: 12px;
+    background: #050505;
+    box-shadow: 0 0 0 1.5px #3a3936, 0 50px 100px rgba(0, 0, 0, 0.55), inset 0 0 0 1px #222;
+    overflow: hidden;
+  }
+  .phone__bar {
+    position: absolute;
+    z-index: 2;
+    inset-inline: 22px;
+    top: 26px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(239, 237, 232, 0.94);
+    color: #141413;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .phone__bar img { border-radius: 7px; }
+  .phone__search { flex: 1; font-size: 1.05rem; }
+  .phone__map { width: 100%; height: 100%; border-radius: 32px; display: block; background: var(--g2); }
+  .route { fill: none; stroke: var(--sail); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+  .route--ghost { stroke: rgba(239, 237, 232, 0.35); stroke-width: 3; stroke-dasharray: 2 9; }
+  :global(html.js[data-motion='on']) .bm .route[data-route] { stroke-dashoffset: var(--draw, 1); }
+  .route__start { fill: #efede8; stroke: #141413; stroke-width: 3; }
+  .route__end circle { fill: #efede8; stroke: var(--sail); stroke-width: 4; }
+  .route__end text { fill: #efede8; font-size: 26px; font-weight: 800; font-family: var(--font); paint-order: stroke; stroke: #141413; stroke-width: 6px; }
+  .route__you { fill: var(--sail); stroke: #fff; stroke-width: 3; opacity: 0; }
+  :global(html.js[data-motion='on']) .route__you { opacity: 1; }
+  .bm__cap { margin-top: 14px; text-align: center; }
+  .bm__text .lead { margin-top: 1em; max-width: 36ch; }
+  .bm__feat { margin: 28px 0 36px; display: grid; gap: 0; max-width: 30rem; border-top: 1px solid var(--line); }
+  .bm__feat li { padding-block: 12px; border-bottom: 1px solid var(--line); }
+  .bm__act { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; }
+  .bm__cta { font-size: 1.15rem; min-height: 60px; padding-inline: 1.6em; }
+  .bm__qr { display: flex; align-items: center; gap: 14px; }
+  .qr {
+    width: 104px;
+    height: 104px;
+    padding: 10px;
+    background: #efede8;
+    border-radius: 10px;
+  }
+  .qr :global(svg) { width: 100%; height: 100%; display: block; }
+  .bm__qr p { max-width: 16ch; margin: 0; }
+  @media (max-width: 860px) {
+    .bm__grid { grid-template-columns: 1fr; }
+    .bm__phone { order: 2; }
+  }
+</style>

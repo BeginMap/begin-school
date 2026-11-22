@@ -1,0 +1,63 @@
+---
+import { t, type Lang } from '../i18n';
+import { MAPS } from '../data/facts';
+import Photo from './Photo.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const photos = ['street-4', 'gate-2', 'gate-6'];
+---
+<section class="sec getting" id="getting" data-field="route" aria-labelledby="getting-title">
+  <div class="wrap">
+    <div class="getting__head scrim">
+      <h2 id="getting-title" class="h2" data-kt>{d.getting.title}</h2>
+      <p class="lead">{d.getting.lead}</p>
+    </div>
+    <ol class="getting__list" role="list">
+      {d.getting.items.map((it, i) => (
+        <li class="gt" style={`--i:${i}`}>
+          <Photo id={photos[i]} lang={lang} class="gt__ph" sizes="(max-width: 760px) 92vw, 30vw" />
+          <h3 class="gt__t">{it.title}</h3>
+          <p class="gt__p">{it.text}</p>
+        </li>
+      ))}
+    </ol>
+    <div class="getting__foot">
+      <p class="getting__addr">{d.getting.address}</p>
+      <div class="getting__btns">
+        <a class="btn" href={MAPS.google} rel="noopener" data-magnetic>{d.getting.google}</a>
+        <a class="btn" href={MAPS.waze} rel="noopener" data-magnetic>{d.getting.waze}</a>
+      </div>
+      <p class="small muted">{d.getting.mapsNote}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .getting__head { max-width: 44rem; margin-bottom: clamp(36px, 6vh, 64px); }
+  .getting__head .lead { margin-top: 1em; }
+  .getting__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gap);
+    counter-reset: gt;
+  }
+  .gt:nth-child(2) { margin-top: 8vh; }
+  .gt:nth-child(3) { margin-top: 3vh; }
+  .gt :global(.gt__ph) { aspect-ratio: 4 / 5; margin-bottom: 14px; }
+  .gt__t { font-size: var(--fs-h3); font-weight: 750; font-style: var(--display-style); }
+  .gt__p { color: var(--fg-muted); margin-top: 0.4em; }
+  .getting__foot {
+    margin-top: clamp(40px, 7vh, 72px);
+    display: grid;
+    gap: 14px;
+    justify-items: start;
+  }
+  .getting__addr { font-size: var(--fs-lead); font-weight: 600; margin: 0; }
+  .getting__btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 760px) {
+    .getting__list { grid-template-columns: 1fr; }
+    .gt:nth-child(n) { margin-top: 0; }
+    .gt :global(.gt__ph) { aspect-ratio: 4 / 3; }
+  }
+</style>

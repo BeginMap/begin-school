@@ -1,0 +1,90 @@
+---
+import { t, type Lang } from '../i18n';
+import { LINKS } from '../data/facts';
+import campus from '../data/campus.json';
+import Photo from './Photo.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const poly = (pts: number[][]) => pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('') + 'Z';
+const line = (pts: number[][]) => pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('');
+const bld = campus.buildings.map((b) => poly(b.ring as number[][])).join('');
+const zones = (campus.evacuation.zones as number[][][]).map(poly).join('');
+const all = [...campus.buildings.flatMap((b) => b.ring as number[][]), ...(campus.evacuation.zones as number[][][]).flat()];
+const minX = Math.min(...all.map((p) => p[0])) - 40, maxX = Math.max(...all.map((p) => p[0])) + 40;
+const minY = Math.min(...all.map((p) => p[1])) - 40, maxY = Math.max(...all.map((p) => p[1])) + 40;
+---
+<section class="sec sec--light safe" id="safe" data-field="safe" aria-labelledby="safe-title">
+  <div class="wrap safe__grid">
+    <div class="safe__text">
+      <h2 id="safe-title" class="h2" data-kt>{d.safe.title}</h2>
+      <p class="lead">{d.safe.lead}</p>
+      <dl class="safe__list">
+        {d.safe.items.map((it) => (
+          <div class="safe__item">
+            <dt>{it.title}</dt>
+            <dd>{it.text}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="safe__links">
+        <a href={`${LINKS.beginMap}?shelter`} rel="noopener">{d.safe.shelter}</a>
+        <a href={`${LINKS.beginMap}?quake`} rel="noopener">{d.safe.quake}</a>
+      </p>
+    </div>
+    <div class="safe__vis">
+      <figure class="safe__map">
+        <svg viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`} aria-hidden="true" data-safe-map>
+          <path class="sm-zones" d={zones} />
+          <path class="sm-bld" d={bld} />
+          {campus.shelters.map((s, i) => (
+            <g class="sm-shelter" transform={`translate(${s.x} ${s.y})`} style={`--i:${i}`}>
+              <circle r="34" class="sm-halo" />
+              <circle r="15" />
+            </g>
+          ))}
+        </svg>
+        <figcaption class="cap">{d.safe.mapCaption}</figcaption>
+      </figure>
+      <Photo id="gate-8" lang={lang} caption class="safe__sign" sizes="(max-width: 760px) 92vw, 38vw" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .safe__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(40px, 6vw, 100px);
+    align-items: start;
+  }
+  .safe__text .lead { margin-top: 1em; }
+  .safe__list { margin: clamp(28px, 5vh, 48px) 0 24px; border-top: 1.5px solid var(--fg); }
+  .safe__item {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 8px 24px;
+    padding-block: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .safe__item dt { font-weight: 700; font-size: 1.1rem; }
+  .safe__item dd { margin: 0; color: var(--fg-muted); }
+  .safe__links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .safe__links a { display: inline-flex; min-height: 44px; align-items: center; font-weight: 600; }
+  .safe__vis { display: grid; gap: 28px; }
+  .safe__map { margin: 0; }
+  .safe__map svg { width: 100%; height: auto; }
+  .sm-bld { fill: rgba(20, 20, 19, 0.06); stroke: #141413; stroke-width: 3; stroke-linejoin: round; }
+  .sm-zones { fill: none; stroke: #4f4d48; stroke-width: 4; stroke-dasharray: 14 12; }
+  .sm-shelter circle { fill: #141413; }
+  .sm-shelter .sm-halo { fill: rgba(20, 20, 19, 0.12); }
+  :global(html[data-motion='on']) .sm-halo { animation: halo 3s var(--ease-move) infinite; animation-delay: calc(var(--i) * 0.5s); transform-box: fill-box; transform-origin: center; }
+  @keyframes halo { 0%, 100% { transform: scale(0.7); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 0.25; } }
+  .safe__map .cap { padding-top: 8px; }
+  .safe__sign :global(img) { aspect-ratio: 4 / 3; object-fit: cover; }
+  .safe__sign :global(figcaption) { padding-top: 8px; }
+  @media (max-width: 860px) {
+    .safe__grid { grid-template-columns: 1fr; }
+    .safe__item { grid-template-columns: 1fr; }
+  }
+</style>

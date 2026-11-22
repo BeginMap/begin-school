@@ -1,0 +1,83 @@
+---
+import { t, fmt, href, type Lang } from '../i18n';
+import { FACTS, LINKS } from '../data/facts';
+import images from '../data/images.gen.json';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const base = import.meta.env.BASE_URL;
+const img = (images as any)['courtyard-north'];
+const set = (fmt2: string, c: string) => img.widths.map((w: number) => `${base}img/courtyard-north-${w}${c}.${fmt2} ${w}w`).join(', ');
+---
+<section class="sec finale" id="finale" data-field="finale" aria-labelledby="finale-title">
+  <figure class="finale__ph" data-finale style={`--lqip:url(${img.lqip})`}>
+    <picture class="finale__bw">
+      <source type="image/avif" srcset={set('avif', '')} sizes="100vw" />
+      <img src={`${base}img/courtyard-north-960.webp`} srcset={set('webp', '')} sizes="100vw" width={img.w} height={img.h} alt="" loading="lazy" decoding="async" />
+    </picture>
+    <picture class="finale__c">
+      <source type="image/avif" srcset={set('avif', '-c')} sizes="100vw" />
+      <img src={`${base}img/courtyard-north-960-c.webp`} srcset={set('webp', '-c')} sizes="100vw" width={img.w} height={img.h} alt={d.photos['courtyard-north']} loading="lazy" decoding="async" />
+    </picture>
+  </figure>
+  <div class="wrap finale__in">
+    <h2 id="finale-title" class="finale__title" data-kt>{d.finale.title}</h2>
+    <p class="lead finale__lead">{d.finale.lead}</p>
+    <div class="finale__act">
+      <a class="btn btn--sail finale__cta" href={LINKS.beginMap} rel="noopener" data-magnetic>{d.finale.cta}</a>
+      <a class="btn" href={href(lang, 'parents/')} data-magnetic>{d.finale.parentsCta}</a>
+    </div>
+    <p class="finale__contacts small">
+      {d.finale.address}
+      {FACTS.phone.show !== 'hide' && <><br /><span data-unverified>{fmt(d.finale.phone, { phone: '' })}<bdi dir="ltr"><a href={`tel:+972${FACTS.phone.value!.replace(/^0|-/g, '')}`}>{FACTS.phone.value}</a></bdi></span></>}
+    </p>
+  </div>
+</section>
+
+<style>
+  .finale {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: clamp(56px, 10vh, 120px);
+    overflow: clip;
+  }
+  .finale__ph {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    background: var(--ink) var(--lqip) center / cover no-repeat;
+  }
+  .finale__ph picture, .finale__ph img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .finale__ph::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12, 12, 11, 0.92) 0%, rgba(12, 12, 11, 0.62) 38%, rgba(12, 12, 11, 0.15) 70%, rgba(12, 12, 11, 0.55) 100%);
+  }
+  .finale__c { opacity: var(--c, 1); }
+  .finale__bw { filter: blur(var(--b, 0px)); }
+  :global(html.js[data-motion='on']) .finale__ph { --c: 0; --b: 10px; }
+  .finale__in { position: relative; }
+  .finale__title {
+    font-size: var(--fs-hero);
+    font-style: var(--display-style);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--track-display);
+    line-height: var(--lh-tight);
+    max-width: 12ch;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+  }
+  .finale__lead { margin-top: 0.8em; max-width: 30ch; }
+  .finale__act { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .finale__cta { min-height: 60px; font-size: 1.15rem; padding-inline: 1.6em; }
+  .finale__contacts { margin-top: 28px; color: var(--fg); }
+  .finale__contacts a { font-weight: 600; }
+</style>

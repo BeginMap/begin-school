@@ -1,0 +1,80 @@
+---
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+---
+<section class="sec sec--light changes" id="changes" data-field="chaos" data-field-end="grid" aria-labelledby="changes-title">
+  <div class="wrap">
+    <header class="changes__head">
+      <h2 id="changes-title" class="h2" data-kt>{d.changes.title}</h2>
+      <p class="lead">{d.changes.lead}</p>
+    </header>
+
+    <div class="cmp" role="table" aria-labelledby="changes-title">
+      <div class="cmp__row cmp__row--head" role="row">
+        <span class="cmp__was" role="columnheader">{d.changes.was}</span>
+        <span class="cmp__arrow" aria-hidden="true"></span>
+        <span class="cmp__now" role="columnheader">{d.changes.now}</span>
+      </div>
+      {d.changes.items.map((it, i) => (
+        <div class="cmp__row" role="row" data-cmp style={`--i:${i}`}>
+          <p class="cmp__was" role="cell">{it.was}</p>
+          <span class="cmp__arrow" aria-hidden="true"><svg viewBox="0 0 40 12" width="40" height="12"><path d="M0 6h36M30 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <p class="cmp__now" role="cell">{it.now}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="changes__outro">{d.changes.outro}</p>
+  </div>
+</section>
+
+<style>
+  .changes__head { max-width: 46rem; margin-bottom: clamp(40px, 7vh, 80px); }
+  .changes__head .lead { margin-top: 1em; max-width: 36ch; }
+  .cmp { border-top: 1.5px solid var(--fg); }
+  .cmp__row {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) 56px minmax(0, 7fr);
+    gap: clamp(12px, 2vw, 28px);
+    align-items: baseline;
+    padding-block: clamp(18px, 3vh, 30px);
+    border-bottom: 1px solid var(--line);
+  }
+  .cmp__row--head {
+    padding-block: 10px;
+    font-size: var(--fs-small);
+    color: var(--fg-muted);
+  }
+  .cmp p { margin: 0; }
+  .cmp__was {
+    color: var(--fg-muted);
+    font-size: 1.02rem;
+    transition: filter 900ms var(--ease-focus), opacity 900ms var(--ease-focus);
+  }
+  .cmp__now {
+    font-size: clamp(1.12rem, 1rem + 0.55vw, 1.45rem);
+    line-height: 1.42;
+    font-weight: 500;
+    transition: filter 900ms var(--ease-focus), opacity 900ms var(--ease-focus), transform 900ms var(--ease-focus);
+  }
+  :lang(ar) .cmp__now { line-height: 1.7; }
+  .cmp__arrow { color: var(--fg-faint); display: flex; justify-content: center; }
+  [dir='rtl'] .cmp__arrow svg { transform: scaleX(-1); }
+  :global(html.js[data-motion='on']) .cmp__row[data-cmp]:not(.is-now) .cmp__now { filter: blur(6px); opacity: 0.25; transform: translateY(8px); }
+  :global(html.js[data-motion='on']) .cmp__row[data-cmp].is-now .cmp__was { filter: blur(1.5px); opacity: 0.55; }
+  .changes__outro {
+    margin-top: clamp(40px, 7vh, 72px);
+    max-width: 30ch;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    font-style: var(--display-style);
+    line-height: 1.25;
+  }
+  @media (max-width: 700px) {
+    .cmp__row { grid-template-columns: 1fr; gap: 6px; }
+    .cmp__row--head { display: none; }
+    .cmp__arrow { display: none; }
+  }
+</style>

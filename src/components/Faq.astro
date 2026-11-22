@@ -1,0 +1,74 @@
+---
+import { t, fmt, type Lang } from '../i18n';
+import { FACTS, LINKS } from '../data/facts';
+interface Props { lang: Lang; only?: 'parents' }
+const { lang, only } = Astro.props;
+const d = t(lang);
+const phone = FACTS.phone.value ?? '';
+const linkFor = (i: number) => (i === 0 ? LINKS.muniRegistration : i === 1 ? LINKS.muniSchools : '');
+---
+<div class:list={['faq', only && 'faq--one']}>
+  {!only && (
+    <div class="faq__col">
+      <h3 class="faq__h">{d.faq.kidsTitle}</h3>
+      {d.faq.kids.map((it) => (
+        <details class="qa">
+          <summary class="qa__q">{it.q}</summary>
+          <div class="qa__a"><p>{it.a}</p></div>
+        </details>
+      ))}
+    </div>
+  )}
+  <div class="faq__col">
+    {!only && <h3 class="faq__h">{d.faq.parentsTitle}</h3>}
+    {d.faq.parents.map((it, i) => (
+      <details class="qa" data-unverified={i <= 2 ? '' : undefined}>
+        <summary class="qa__q">{it.q}</summary>
+        <div class="qa__a">
+          <p>{fmt(it.a, { phone })}</p>
+          {'link' in it && it.link && <p><a href={linkFor(i)} rel="noopener">{it.link}</a></p>}
+        </div>
+      </details>
+    ))}
+  </div>
+</div>
+
+<style>
+  .faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 80px); }
+  .faq--one { grid-template-columns: 1fr; max-width: 52rem; }
+  .faq__h { font-size: 1.05rem; font-weight: 700; color: var(--fg-muted); margin-bottom: 8px; }
+  .qa { border-top: 1px solid var(--line); }
+  .qa:last-child { border-bottom: 1px solid var(--line); }
+  .qa__q {
+    position: relative;
+    display: block;
+    list-style: none;
+    cursor: pointer;
+    padding-block: 18px;
+    padding-inline-end: 40px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .qa__q::-webkit-details-marker { display: none; }
+  .qa__q::after {
+    content: '';
+    position: absolute;
+    inset-inline-end: 6px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    background:
+      linear-gradient(currentColor, currentColor) center / 14px 1.8px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 1.8px 14px no-repeat;
+    transition: transform var(--dur-2) var(--ease-focus);
+  }
+  .qa[open] .qa__q::after { transform: rotate(45deg); }
+  .qa__a { padding-bottom: 20px; color: var(--fg-muted); max-width: 54ch; }
+  .qa__a p { margin: 0 0 0.6em; }
+  .qa__a a { color: var(--fg); font-weight: 600; display: inline-flex; min-height: 40px; align-items: center; }
+  .qa[open] .qa__a { animation: qa-in var(--dur-3) var(--ease-focus); }
+  @keyframes qa-in { from { opacity: 0; filter: blur(4px); transform: translateY(-4px); } }
+  @media (max-width: 860px) { .faq { grid-template-columns: 1fr; } }
+</style>

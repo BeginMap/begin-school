@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import Years from './Years.astro';
+import Changes from './Changes.astro';
+import Day from './Day.astro';
+import Campus from './Campus.astro';
+import Names from './Names.astro';
+import Life from './Life.astro';
+import BeginMap from './BeginMap.astro';
+import Safe from './Safe.astro';
+import Getting from './Getting.astro';
+import Faq from './Faq.astro';
+import Finale from './Finale.astro';
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+---
+<Base lang={lang} page="" title={d.meta.title} description={d.meta.description}>
+  <Hero lang={lang} />
+  <Years lang={lang} />
+  <Changes lang={lang} />
+  <Day lang={lang} />
+  <Campus lang={lang} />
+  <Names lang={lang} />
+  <Life lang={lang} />
+  <BeginMap lang={lang} />
+  <Safe lang={lang} />
+  <Getting lang={lang} />
+  <section class="sec sec--light faqsec" id="faq" data-field="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 id="faq-title" class="h2 faqsec__title" data-kt>{d.faq.title}</h2>
+      <Faq lang={lang} />
+    </div>
+  </section>
+  <Finale lang={lang} />
+</Base>
+
+<style>
+  .faqsec__title { margin-bottom: clamp(32px, 6vh, 64px); }
+</style>

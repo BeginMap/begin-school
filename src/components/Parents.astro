@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import Faq from './Faq.astro';
+import { t, fmt, href, type Lang } from '../i18n';
+import { FACTS, LINKS, MAPS } from '../data/facts';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.parents;
+const phone = FACTS.phone.value ?? '';
+---
+<Base lang={lang} page="parents/" title={d.meta.parentsTitle} description={d.meta.parentsDescription} fieldStart="page">
+  <section class="sec pg" data-field="page" aria-labelledby="pg-title">
+    <div class="wrap pg__head scrim">
+      <h1 id="pg-title" class="h2" data-kt>{p.h1}</h1>
+      <p class="lead">{p.lead}</p>
+    </div>
+  </section>
+
+  <section class="sec sec--light pg-body" data-field="faq">
+    <div class="wrap pg__grid">
+      <article class="pg__main prose">
+        <section class="blk" aria-labelledby="b-school">
+          <h2 id="b-school">{p.school.title}</h2>
+          <p>{p.school.text}</p>
+        </section>
+        <section class="blk" aria-labelledby="b-tr">
+          <h2 id="b-tr">{p.transition.title}</h2>
+          <p>{p.transition.text}</p>
+          <ul class="ticks">{p.transition.tips.map((x) => <li>{x}</li>)}</ul>
+        </section>
+        <section class="blk" aria-labelledby="b-reg" data-unverified>
+          <h2 id="b-reg">{p.registration.title}</h2>
+          <p>{p.registration.text}</p>
+          <p><a href={LINKS.muniRegistration} rel="noopener">{p.registration.link}</a></p>
+        </section>
+        <section class="blk" aria-labelledby="b-safe">
+          <h2 id="b-safe">{p.safety.title}</h2>
+          <p>{p.safety.text}</p>
+        </section>
+        <section class="blk" aria-labelledby="b-route">
+          <h2 id="b-route">{p.route.title}</h2>
+          <p>{p.route.text}</p>
+          <p class="small" data-unverified>{p.route.addressNote}</p>
+          <p class="btnrow">
+            <a class="btn" href={MAPS.google} rel="noopener">{d.getting.google}</a>
+            <a class="btn" href={MAPS.waze} rel="noopener">{d.getting.waze}</a>
+          </p>
+        </section>
+        <section class="blk" aria-labelledby="b-olim">
+          <h2 id="b-olim">{p.olim.title}</h2>
+          <p>{p.olim.text}</p>
+        </section>
+        <section class="blk" aria-labelledby="b-contacts" data-unverified>
+          <h2 id="b-contacts">{p.contacts.title}</h2>
+          <p>{fmt(p.contacts.text, { phone: '' }).replace(/\.\s*$/, '')}<bdi dir="ltr"><a href={`tel:+972${phone.replace(/^0|-/g, '')}`}>{phone}</a></bdi></p>
+          <p><a href={LINKS.muniSchools} rel="noopener">{p.contacts.link}</a></p>
+        </section>
+        <section class="blk blk--pending" aria-labelledby="b-pend">
+          <h2 id="b-pend">{p.pending.title}</h2>
+          <p>{p.pending.lead}</p>
+          <ul class="pend">{p.pending.items.map((x) => <li>{x}</li>)}</ul>
+        </section>
+      </article>
+      <aside class="pg__side" aria-hidden="false">
+        <Photo id="yard-1" lang={lang} caption sizes="(max-width: 860px) 92vw, 34vw" />
+        <Photo id="yard-10" lang={lang} caption sizes="(max-width: 860px) 92vw, 34vw" />
+        <Photo id="gate-6" lang={lang} caption sizes="(max-width: 860px) 92vw, 34vw" />
+      </aside>
+    </div>
+    <div class="wrap pg__faq">
+      <h2 class="h2 pg__faqt">{p.faqTitle}</h2>
+      <Faq lang={lang} only="parents" />
+      <p class="pg__back"><a class="btn" href={href(lang)}>{d.ui.kids}</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pg { padding-block: calc(var(--header-h) + 14vh) clamp(56px, 10vh, 100px); }
+  .pg__head .lead { margin-top: 1em; max-width: 40ch; }
+  .pg__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(40px, 6vw, 100px);
+    align-items: start;
+  }
+  .blk { padding-block: 28px; border-top: 1px solid var(--line); }
+  .blk:first-child { border-top: 1.5px solid var(--fg); }
+  .blk h2 { font-size: var(--fs-h3); font-weight: 750; font-style: var(--display-style); margin-bottom: 0.6em; }
+  .blk p { color: var(--fg-muted); }
+  .blk a { color: var(--fg); font-weight: 600; }
+  .ticks, .pend { margin: 0; padding-inline-start: 1.2em; color: var(--fg-muted); }
+  .ticks li, .pend li { margin-bottom: 0.5em; }
+  .pend li::marker { content: '○  '; }
+  .btnrow { display: flex; flex-wrap: wrap; gap: 10px; }
+  .blk .btn { color: var(--fg); }
+  .pg__side { display: grid; gap: 24px; position: sticky; top: calc(var(--header-h) + 24px); }
+  .pg__side :global(.ph) { aspect-ratio: 4 / 3; }
+  .pg__side :global(figcaption) { padding-top: 8px; }
+  .pg__faq { margin-top: clamp(56px, 9vh, 110px); }
+  .pg__faqt { margin-bottom: 32px; }
+  .pg__back { margin-top: 48px; }
+  @media (max-width: 860px) {
+    .pg__grid { grid-template-columns: 1fr; }
+    .pg__side { position: static; }
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { t, href, type Lang } from '../i18n';
+import { LINKS } from '../data/facts';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.privacy;
+---
+<Base lang={lang} page="privacy/" title={d.meta.privacyTitle} description={d.meta.privacyDescription} fieldStart="page">
+  <section class="sec pv" data-field="page" aria-labelledby="pv-title">
+    <div class="wrap pv__head scrim">
+      <h1 id="pv-title" class="h2" data-kt>{p.h1}</h1>
+      <p class="lead">{p.lead}</p>
+    </div>
+  </section>
+  <section class="sec sec--light pv-body" data-field="faq">
+    <div class="wrap">
+      <dl class="pv__list">
+        {p.items.map((it) => (
+          <div class="pv__item">
+            <dt>{it.title}</dt>
+            <dd>{it.text}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="pv__contact"><a href={`${LINKS.repo}/issues`} rel="noopener">{p.contact}</a></p>
+      <p><a class="btn" href={href(lang)}>{d.notFound.home}</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pv { padding-block: calc(var(--header-h) + 14vh) clamp(56px, 10vh, 100px); }
+  .pv__head .lead { margin-top: 1em; }
+  .pv__list { margin: 0 0 32px; max-width: 54rem; border-top: 1.5px solid var(--fg); }
+  .pv__item {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 8px 32px;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .pv__item dt { font-weight: 700; font-size: 1.1rem; }
+  .pv__item dd { margin: 0; color: var(--fg-muted); }
+  .pv__contact a { font-weight: 600; }
+  @media (max-width: 700px) { .pv__item { grid-template-columns: 1fr; } }
+</style>

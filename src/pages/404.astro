@@ -1,0 +1,40 @@
+---
+// GitHub Pages serves this for every unknown URL, in any language — so it speaks all four.
+import Base from '../layouts/Base.astro';
+import { LANGS, DIR, t, href } from '../i18n';
+---
+<Base lang="he" page="" title="404 — בגין, אילת" description={t('he').notFound.text} fieldStart="lost" noindex>
+  <section class="sec lost" data-field="lost" aria-labelledby="lost-title">
+    <div class="wrap lost__in">
+      <p class="lost__code" aria-hidden="true">404</p>
+      <h1 id="lost-title" class="visually-hidden">404</h1>
+      <ul class="lost__list" role="list">
+        {LANGS.map((l) => (
+          <li lang={l} dir={DIR[l]} class="lost__item">
+            <p class="lost__t">{t(l).notFound.title}</p>
+            <p class="lost__p">{t(l).notFound.text} <a href={href(l)}>{t(l).notFound.home}</a></p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lost { min-height: 100svh; display: flex; align-items: center; }
+  .lost__code {
+    font-size: clamp(7rem, 30vw, 22rem);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 0.8;
+    margin: 0 0 32px;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--fg);
+    filter: blur(1.5px);
+  }
+  .lost__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .lost__item { padding: 16px; background: rgba(12, 12, 11, 0.72); }
+  .lost__t { font-size: 1.4rem; font-weight: 800; margin: 0 0 4px; }
+  .lost__p { margin: 0; color: var(--fg-muted); }
+  .lost__p a { color: var(--fg); font-weight: 600; }
+</style>

@@ -1,0 +1,239 @@
+---
+import { t, fmt, type Lang } from '../i18n';
+import { FLAGS } from '../data/facts';
+import { PHOTO_BY_ID } from '../data/photos';
+import Photo from './Photo.astro';
+import { buildPaths, camAt, project, SPOTS, LABELS, LABEL_H, VB_W, VB_H } from '../scripts/campus-geo';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const cam = camAt(1);
+const p = buildPaths(cam);
+const spots = SPOTS.map((s) => ({ ...s, photos: s.photos.filter((id) => FLAGS.fbPhotos || !PHOTO_BY_ID[id].fb) })).filter((s) => s.photos.length);
+const pos = (x: number, y: number, h = 0) => {
+  const [sx, sy] = project(x, y, h, cam);
+  return `--x:${((sx / VB_W) * 100).toFixed(2)}%;--y:${((sy / VB_H) * 100).toFixed(2)}%`;
+};
+const labelKeys = ['htb', 'hta', 'library', 'yard', 'eshkol', 'gym', 'court'] as const;
+const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
+---
+<section class="sec campus" id="campus" data-field="campus" aria-labelledby="campus-title">
+  <div class="wrap campus__head scrim">
+    <h2 id="campus-title" class="h2" data-kt>{d.campus.title}</h2>
+    <p class="lead">{d.campus.lead}</p>
+  </div>
+
+  <div class="campus__pin" data-campus>
+    <div class="campus__stage">
+      <svg class="campus__svg" viewBox={`0 0 ${VB_W} ${VB_H}`} aria-hidden="true" focusable="false">
+        <path class="c-yard" d={p.yard} pathLength="1" />
+        <path class="c-base" d={p.base} pathLength="1" />
+        <path class="c-walls" d={p.walls} pathLength="1" />
+        <path class="c-roofs" d={p.roofs} pathLength="1" />
+      </svg>
+      <div class="campus__labels" aria-hidden="true">
+        {labelKeys.map((k) => (
+          <span class={`clabel clabel--${k}`} data-label={k} style={pos(LABELS[k][0], LABELS[k][1], LABEL_H[k])}>{labelText(k)}</span>
+        ))}
+      </div>
+      <ul class="campus__spots" role="list">
+        {spots.map((s) => (
+          <li>
+            <button
+              type="button"
+              class="spot"
+              data-spot={s.id}
+              data-x={s.at[0]}
+              data-y={s.at[1]}
+              style={pos(s.at[0], s.at[1])}
+              aria-label={fmt(d.ui.openPhoto, { name: d.campus.spots[s.id as keyof typeof d.campus.spots] })}
+            ><span class="spot__dot" aria-hidden="true"></span></button>
+          </li>
+        ))}
+      </ul>
+      <p class="campus__hint small" aria-hidden="true">{d.campus.hint}</p>
+    </div>
+  </div>
+
+  <div class="wrap places">
+    <h3 class="places__title">{d.campus.listTitle}</h3>
+    <ul class="places__list" role="list">
+      {spots.map((s) => (
+        <li>
+          <details class="place" id={`place-${s.id}`} data-place={s.id}>
+            <summary class="place__name">{d.campus.spots[s.id as keyof typeof d.campus.spots]} <span class="place__n">{s.photos.length}</span></summary>
+            <div class="place__photos" data-place-photos={s.id}>
+              {s.photos.map((id) => <Photo id={id} lang={lang} caption credit sizes="(max-width: 760px) 92vw, 70vw" focus={false} />)}
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+    <p class="small muted">{d.campus.source}</p>
+  </div>
+
+  <dialog class="pdlg" data-photo-dialog aria-labelledby="pdlg-title">
+    <div class="pdlg__in">
+      <header class="pdlg__head">
+        <h3 id="pdlg-title" class="pdlg__title"></h3>
+        <span class="pdlg__count small muted" data-count-fmt={d.ui.photoCount}></span>
+        <button type="button" class="pdlg__close" data-close aria-label={d.ui.close}>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+        </button>
+      </header>
+      <div class="pdlg__body" data-body></div>
+      <footer class="pdlg__nav">
+        <button type="button" class="btn pdlg__btn" data-prev><svg class="flip" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>{d.ui.prev}</button>
+        <button type="button" class="btn pdlg__btn" data-next>{d.ui.next}<svg class="flip" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      </footer>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  .campus { padding-bottom: clamp(48px, 8vh, 96px); }
+  .campus__head { max-width: 48rem; }
+  .campus__head .lead { margin-top: 1em; max-width: 40ch; }
+  .campus__pin { position: relative; }
+  .campus__stage {
+    position: relative;
+    width: min(100%, 1180px, calc(88svh * 1000 / 900));
+    margin-inline: auto;
+    aspect-ratio: 1000 / 900;
+  }
+  :global(.campus__pin.is-pinned) {
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .campus__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .campus__svg path { vector-effect: non-scaling-stroke; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+  .c-yard { stroke: var(--g5); stroke-width: 1; opacity: 0.7; }
+  .c-base { stroke: var(--g6); stroke-width: 1; }
+  .c-walls { stroke: var(--g6); stroke-width: 0.8; opacity: 0.55; }
+  .c-roofs { stroke: var(--fg); stroke-width: 1.3; }
+  :global(html.js[data-motion='on']) .campus__svg:not(.is-drawn) path { stroke-dashoffset: 1; }
+  :global(html.js[data-motion='on']) .campus__svg path { transition: stroke-dashoffset 2.4s var(--ease-move); }
+  :global(html.js[data-motion='on']) .campus__svg .c-base { transition-delay: 0.2s; }
+  :global(html.js[data-motion='on']) .campus__svg .c-roofs { transition-delay: 0.5s; }
+
+  .campus__labels, .campus__spots { position: absolute; inset: 0; pointer-events: none; }
+  .clabel {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -140%);
+    padding: 3px 9px;
+    font-size: clamp(0.74rem, 0.65rem + 0.35vw, 0.95rem);
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--fg);
+    background: rgba(12, 12, 11, 0.72);
+    border-radius: 999px;
+    transition: opacity var(--dur-2) linear;
+  }
+  .clabel.is-off { opacity: 0; }
+  .spot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  .spot.is-off { visibility: hidden; }
+  .spot__dot {
+    position: absolute;
+    inset: 15px;
+    border-radius: 50%;
+    background: var(--fg);
+    box-shadow: 0 0 0 0 rgba(239, 237, 232, 0.5);
+    animation: spot-pulse 2.6s var(--ease-move) infinite;
+    animation-delay: calc(var(--d, 0) * 1s);
+    transition: transform var(--dur-1) var(--ease-snap);
+  }
+  .spot:hover .spot__dot, .spot:focus-visible .spot__dot { transform: scale(1.45); }
+  @keyframes spot-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 237, 232, 0.55); }
+    70%, 100% { box-shadow: 0 0 0 14px rgba(239, 237, 232, 0); }
+  }
+  .campus__hint { position: absolute; inset-inline-start: 0; bottom: -8px; color: var(--fg-faint); margin: 0; }
+
+  .places { margin-top: clamp(32px, 6vh, 64px); }
+  .places__title { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+  .places__list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .places__list li:has(.place[open]) { flex-basis: 100%; }
+  .place__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 6px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .place__name::-webkit-details-marker { display: none; }
+  .place__name:hover { border-color: var(--fg); }
+  .place__n { font-size: 0.8rem; color: var(--fg-faint); }
+  .place[open] .place__name { background: var(--fg); color: var(--ink); }
+  .place__photos { display: none; }
+  .place[open] .place__photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    padding-block: 12px 24px;
+  }
+  .place__photos :global(.ph) { aspect-ratio: 4 / 3; }
+  .place__photos :global(figcaption) { padding-top: 6px; }
+
+  .pdlg {
+    width: min(1100px, 94vw);
+    max-height: 94svh;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: var(--g1);
+    color: var(--fg);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+  }
+  .pdlg::backdrop { background: rgba(6, 6, 6, 0.72); backdrop-filter: blur(6px); }
+  .pdlg[open] { animation: dlg-in var(--dur-2) var(--ease-focus); }
+  @keyframes dlg-in { from { opacity: 0; transform: scale(0.97); filter: blur(6px); } }
+  .pdlg__in { display: grid; grid-template-rows: auto 1fr auto; max-height: 94svh; }
+  .pdlg__head { display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 20px; }
+  [dir='rtl'] .pdlg__head { padding: 12px 20px 12px 12px; }
+  .pdlg__title { font-size: 1.15rem; font-weight: 700; }
+  .pdlg__close {
+    margin-inline-start: auto;
+    width: 44px; height: 44px;
+    border: 0; border-radius: 50%;
+    background: transparent;
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+  .pdlg__close:hover { background: var(--g3); }
+  .pdlg__body { min-height: 0; overflow: auto; padding: 0 20px; }
+  .pdlg__body :global(.ph) { max-height: 68svh; aspect-ratio: auto; background-color: var(--g2); }
+  .pdlg__body :global(.ph img) { max-height: 68svh; object-fit: contain; }
+  .pdlg__body :global(figcaption) { padding: 10px 0 4px; font-size: 1rem; color: var(--fg); }
+  .pdlg__nav { display: flex; justify-content: space-between; gap: 12px; padding: 14px 20px 18px; }
+  .pdlg__btn { min-height: 46px; }
+</style>

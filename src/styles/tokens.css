@@ -1,0 +1,69 @@
+/* Design tokens. Monochrome granite + concrete paper, one red: the courtyard sails. */
+:root {
+  /* colour */
+  --ink: #0c0c0b;          /* granite night — matches the field's dark ground */
+  --g1: #161615;
+  --g2: #1f1f1d;
+  --g3: #2e2e2b;
+  --g4: #4a4945;
+  --g5: #74726c;
+  --g6: #a3a09a;
+  --g7: #cdcac3;
+  --g8: #e3e0da;
+  --paper: #ecebe7;        /* concrete paper — matches the field's light ground */
+  --sail: #c9362f;         /* sunlit red of the three courtyard sails (sampled from yard photos) */
+  --sail-deep: #a72a25;
+  --sail-light: #ff8a7e;   /* red for small marks on dark ground (AA) */
+
+  --fg: #efede8;
+  --fg-muted: #b3b0a9;
+  --fg-faint: #8b8882;
+  --bg: var(--ink);
+  --line: rgba(239, 237, 232, 0.22);
+  --focus: #efede8;
+
+  /* type */
+  --font: 'Rubik Variable', 'Rubik', system-ui, -apple-system, 'Segoe UI', 'Noto Sans Hebrew', 'Noto Sans Arabic', sans-serif;
+  --fs-hero: clamp(3.1rem, 1.1rem + 9.4vw, 10.5rem);
+  --fs-h2: clamp(2.35rem, 0.95rem + 5.6vw, 6.4rem);
+  --fs-h3: clamp(1.3rem, 1rem + 1.1vw, 2rem);
+  --fs-lead: clamp(1.18rem, 1rem + 0.7vw, 1.6rem);
+  --fs-body: clamp(1.03rem, 0.98rem + 0.22vw, 1.16rem);
+  --fs-small: 0.9rem;
+  --lh-body: 1.55;
+  --lh-tight: 0.94;
+  --display-style: italic;
+  --display-weight: 860;
+  --track-display: -0.025em;
+
+  /* layout */
+  --pad: clamp(16px, 5vw, 72px);
+  --max: 1320px;
+  --col: 62ch;
+  --gap: clamp(16px, 2.4vw, 32px);
+  --header-h: 64px;
+  --radius: 2px;
+
+  /* motion — one character for everything */
+  --ease-focus: cubic-bezier(0.16, 1, 0.3, 1);   /* expo-out: the "focus pull" */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);   /* in-out: travel */
+  --ease-snap: cubic-bezier(0.3, 1.4, 0.5, 1);   /* a small overshoot for UI feedback */
+  --dur-1: 160ms;
+  --dur-2: 420ms;
+  --dur-3: 900ms;
+  --dur-4: 1400ms;
+}
+
+:root:lang(ar) {
+  --display-style: normal;      /* Arabic is never slanted */
+  --display-weight: 800;
+  --track-display: 0;
+  --lh-body: 1.75;
+  --lh-tight: 1.15;
+  --fs-hero: clamp(2.8rem, 1rem + 8.4vw, 9rem);
+  --fs-h2: clamp(2.1rem, 0.9rem + 5vw, 5.6rem);
+}
+:root:lang(he) {
+  --track-display: 0;
+  --lh-tight: 0.98;
+}

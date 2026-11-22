@@ -56,7 +56,7 @@ export function initYears(): Cleanup {
 export function initChanges(): Cleanup {
   const rows = document.querySelectorAll<HTMLElement>('[data-cmp]');
   const sts = Array.from(rows).map((r) =>
-    ScrollTrigger.create({ trigger: r, start: 'top 72%', onEnter: () => r.classList.add('is-now'), onLeaveBack: () => r.classList.remove('is-now') }),
+    ScrollTrigger.create({ trigger: r, start: 'top 78%', once: true, onEnter: () => r.classList.add('is-now') }),
   );
   return () => sts.forEach((s) => s.kill());
 }

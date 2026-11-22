@@ -24,6 +24,7 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
   </div>
 
   <div class="campus__pin" data-campus>
+    <p class="campus__hint small" aria-hidden="true">{d.campus.hint}</p>
     <div class="campus__stage">
       <svg class="campus__svg" viewBox={`0 0 ${VB_W} ${VB_H}`} aria-hidden="true" focusable="false">
         <path class="c-yard" d={p.yard} pathLength="1" />
@@ -51,7 +52,6 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
           </li>
         ))}
       </ul>
-      <p class="campus__hint small" aria-hidden="true">{d.campus.hint}</p>
     </div>
   </div>
 
@@ -173,7 +173,8 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
     0% { box-shadow: 0 0 0 0 rgba(239, 237, 232, 0.55); }
     70%, 100% { box-shadow: 0 0 0 14px rgba(239, 237, 232, 0); }
   }
-  .campus__hint { position: absolute; inset-inline-start: 0; bottom: -8px; color: var(--fg-faint); margin: 0; }
+  .campus__hint { position: absolute; inset-inline-start: var(--pad); top: calc(var(--header-h) + 8px); color: var(--fg-muted); margin: 0; z-index: 2; }
+  @media (max-width: 600px) { .spot { width: 30px; height: 30px; margin: -15px 0 0 -15px; } .spot__dot { inset: 8px; } }
 
   .places { margin-top: clamp(32px, 6vh, 64px); }
   .places__title { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }

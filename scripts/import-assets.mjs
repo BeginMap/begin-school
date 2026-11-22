@@ -142,7 +142,9 @@ const evacuation = {
 
 // Room names, grouped by theme. Only themes we are sure about (see DECISIONS.md → "Room names").
 const official = Object.fromEntries(rooms.map((r) => [r.official, r]));
-const pick = (list) => list.filter((n) => official[n]).map((n) => ({ he: n, ru: official[n].names.ru, en: official[n].names.en, id: official[n].id }));
+// transliteration fixes over Begin Map's names (real place names)
+const FIX = { rudad: { ru: 'Родед', en: 'Roded' } };
+const pick = (list) => list.filter((n) => official[n]).map((n) => ({ he: n, ru: official[n].names.ru, en: official[n].names.en, id: official[n].id, ...(FIX[official[n].id] || {}) }));
 const names = {
   birds: pick(['דרור', 'צופית', 'אנפה', 'עפרוני', 'שחף', 'עגור']),
   flowers: pick(['כלנית', 'אירוס', 'נורית', 'ורד', 'נרקיס', 'חצב', 'צבעוני', 'מרגנית', 'לילך', 'רקפת', 'סחלב', 'יסמין', 'כרכום']),

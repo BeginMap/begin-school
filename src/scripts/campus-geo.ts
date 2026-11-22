@@ -95,8 +95,7 @@ export function buildPaths(c: Cam): Paths {
 
 export interface Spot { id: string; at: [number, number]; photos: string[] }
 export const SPOTS: Spot[] = [
-  { id: 'gate', at: [1076, 1896], photos: ['gate-2', 'gate-1', 'gate-5', 'gate-8'] },
-  { id: 'garden', at: [980, 1781], photos: ['gate-9', 'gate-10'] },
+  { id: 'gate', at: [1040, 1860], photos: ['gate-2', 'gate-1', 'gate-5', 'gate-8', 'gate-9', 'gate-10'] },
   { id: 'street', at: [1376, 1816], photos: ['street-1', 'street-4', 'street-7'] },
   { id: 'yard', at: [826, 1078], photos: ['yard-14', 'yard-3', 'yard-5', 'yard-13', 'yard-15', 'yard-9'] },
   { id: 'courtyard', at: [869, 905], photos: ['courtyard-north', 'yard-1'] },

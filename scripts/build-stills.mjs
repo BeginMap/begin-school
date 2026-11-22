@@ -27,9 +27,9 @@ const browser = await launch({ args: ['--use-angle=swiftshader', '--enable-unsaf
 // ---- 2. Open Graph images
 const T = {
   he: { a: 'היי,', b: 'ז׳ של ספטמבר', s: 'בית הספר בגין, אילת', dir: 'rtl' },
-  ar: { a: 'أهلًا بكم،', b: 'طلاب السابع الجدد', s: 'مدرسة بيغن، إيلات', dir: 'rtl' },
+  ar: { a: 'أهلًا بكم،', b: 'طلابَ الصف السابع الجدد', s: 'مدرسة بيغن، إيلات', dir: 'rtl' },
   ru: { a: 'Привет,', b: 'будущий ז׳', s: 'Школа «Бегин», Эйлат', dir: 'ltr' },
-  en: { a: 'Hi there,', b: 'future 7th grader', s: 'Begin school, Eilat', dir: 'ltr' },
+  en: { a: 'Hi there,', b: 'future 7th grader', s: 'Begin School, Eilat', dir: 'ltr' },
 };
 const fontDir = path.join(ROOT, 'node_modules/@fontsource-variable/rubik/files');
 const fontFace = fs.readdirSync(fontDir).filter((f) => f.endsWith('.woff2')).map((f) => {

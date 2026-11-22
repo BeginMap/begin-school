@@ -88,33 +88,39 @@ export function initMotionToggle(apply: (on: boolean) => void): Cleanup {
   return () => btn.removeEventListener('click', onClick);
 }
 
-/** Side progress line: ticks at section starts, a red dot for 'you are here', current section highlighted. */
+/** Side progress line: one evenly spaced tick per section, a red "you are here" dot, current section highlighted. */
 export function initProgress(): Cleanup {
   const nav = document.querySelector<HTMLElement>('[data-progress]');
   if (!nav) return () => {};
   const items = Array.from(nav.querySelectorAll<HTMLElement>('[data-progress-item]'));
+  const n = items.length;
   let tops: number[] = [];
-  let max = 1;
   const measure = () => {
-    max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-    tops = items.map((it) => {
+    tops = items.map((it, i) => {
+      it.style.setProperty('--t', String(n > 1 ? i / (n - 1) : 0));
       const el = document.getElementById(it.dataset.progressItem!);
-      const top = el ? el.getBoundingClientRect().top + scrollY : 0;
-      it.style.setProperty('--t', String(Math.min(1, top / max)));
-      return top;
+      return el ? el.getBoundingClientRect().top + scrollY : 0;
     });
     update();
   };
   let raf = 0;
   const update = () => {
     raf = 0;
-    const y = scrollY;
-    nav.style.setProperty('--p', String(Math.min(1, Math.max(0, y / max))));
+    const probe = scrollY + innerHeight * 0.5;
     let cur = -1;
-    tops.forEach((t, i) => { if (y + innerHeight * 0.5 >= t) cur = i; });
+    tops.forEach((t, i) => { if (probe >= t) cur = i; });
+    // position along the rail: section index + how far through that section we are
+    let p = 0;
+    if (cur >= 0) {
+      const next = cur < n - 1 ? tops[cur + 1] : document.documentElement.scrollHeight;
+      const frac = Math.min(1, Math.max(0, (probe - tops[cur]) / Math.max(1, next - tops[cur])));
+      p = Math.min(1, (cur + (cur < n - 1 ? frac : 0)) / Math.max(1, n - 1));
+    }
+    nav.style.setProperty('--p', String(p));
     items.forEach((it, i) => it.classList.toggle('is-cur', i === cur));
     const id = cur >= 0 ? items[cur].dataset.progressItem : '';
     nav.classList.toggle('is-dim', id === 'day' || id === 'life' || id === 'campus');
+    nav.classList.toggle('is-before', cur < 0);
   };
   const on = () => { if (!raf) raf = requestAnimationFrame(update); };
   addEventListener('scroll', on, { passive: true });

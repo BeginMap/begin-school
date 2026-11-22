@@ -11,6 +11,8 @@ Short log of taste and technical decisions taken without asking, with the reason
 - **Lenis 1.3** only with a fine pointer and motion on. Touch devices keep native scroll.
 - **No Three.js.** The background is raw WebGL2; the "campus in lines" is SVG (see below). The optional 3D library insert was skipped: the line campus already carries the 3D moment, and `library.glb` (1.2 MB) would cost more than it gives.
 - **No analytics at all** (not even Umami): nothing to collect from children. A privacy page exists anyway, in four languages.
+- **Lazy story chunk.** First load ships ~14 KB gzip of JS (field + header + router). GSAP, ScrollTrigger, Lenis and all section choreography (~53 KB gzip) load after the first paint; the campus code (~7 KB) is its own chunk. CSS "start states" (undrawn lines, blurred rows, monochrome finale) apply only once that code runs (`html.story`), so a failed chunk never hides content.
+- **ScrollTrigger.sort() before every refresh**: triggers are created out of page order (the campus pin is created last), and without sorting everything below it was measured ~2 600 px too early.
 - **Exact versions** in `package.json` (`npm i -E`) plus `package-lock.json`.
 - **Playwright** runs against the Chromium already on this machine (`qa/browser.mjs`); the brief said not to reinstall.
 
@@ -26,13 +28,14 @@ Short log of taste and technical decisions taken without asking, with the reason
 ## Motion core (living background)
 
 - One fixed `<canvas>`, WebGL2, a single full-screen triangle, **one draw call**. Layers in the fragment shader: domain-warped fbm fog → stripe field (`parallel / contour / grid` mixed by uniforms, anti-aliased with `fwidth`) → film grain → vignette.
-- Rendered at **0.75 (touch) / 0.6 (desktop) of CSS pixels**, DPR ignored. Budget check every 2 s: above 20 ms average → 0.5 → 0.4 → trail off → still frame.
+- Rendered at **0.6 of CSS pixels** (234 × 506 on a 390-px phone), DPR ignored. Budget check every 2 s: above 20 ms average → 0.5 → 0.4 → trail off → still frame.
 - **Pointer trail = buffer of the last 12 points in uniforms**, not a ping-pong FBO: same look, no extra pass, cheaper on phones.
 - **Scroll velocity → damped spring** (k = 70, ζ ≈ 0.62, settles in ~0.6 s) drives bend, stretch, blur and grain. All smoothing is frame-rate independent (`1 − e^(−k·dt)`).
 - **Section states are anchors**, two per section (top + ⅓ screen, bottom − ⅓ screen), so the field morphs while a section boundary crosses the middle of the screen — this also works with pinned sections whose height includes the pin spacer.
 - Shader compiles with `KHR_parallel_shader_compile` and the field starts after first paint (`requestIdleCallback`), so text (LCP) never waits for WebGL.
 - **Language switch keeps the canvas:** Astro's `ClientRouter` with `transition:persist` swaps pages around it; a click on another language starts a wave in the new reading direction and the swap is delayed ~360 ms so the text changes while the wave crosses.
 - Fallbacks: no WebGL2 → a pre-rendered still of the field (`src/assets/field-dark.webp`, 11 KB) with a slow CSS drift; no JS → the same still as page background; reduced motion / motion switch off → one still frame of the current section's state, no pin, no parallax, no Lenis.
+- **Counters** were not added: the only confirmed numbers (4 shelters, 9 computer rooms, 6 years) read better as words than as animated figures; unconfirmed numbers (pupils, classes) stay hidden.
 - Tilt control was **not** added (optional in the brief): an extra permission prompt on iOS for a decorative effect is not worth it for 11-year-olds.
 
 ## Structure

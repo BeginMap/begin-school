@@ -11,6 +11,7 @@ const CPU = Number(arg('cpu', '4'));
 const W = Number(arg('width', '390'));
 const H = W < 768 ? 844 : 900;
 const SPEED = Number(arg('speed', '1400')); // px per second
+const CSS = arg('css', ''); // extra CSS to inject (experiments)
 
 const args = GPU === 'soft' ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : [];
 const browser = await launch({ args });
@@ -21,6 +22,8 @@ for (const lang of LANGS) {
   const page = await ctx.newPage();
   const cdp = await ctx.newCDPSession(page);
   await page.goto(BASE + (lang === 'he' ? '' : lang + '/'), { waitUntil: 'networkidle' });
+  if (CSS) await page.addStyleTag({ content: CSS });
+  if (process.argv.includes('--nofield')) await page.evaluate(() => window.__field?.setStill(true, true));
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
   await page.waitForTimeout(3500);
   const res = await page.evaluate(async (speed) => {

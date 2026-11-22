@@ -175,6 +175,8 @@ const campus = {
     eshkol: [1840, 800],
     gym: [175, 140],
     court: [1135, 300],
+    gate: [1040, 1860],
+    stop: [1376, 1816],
   },
   names,
   classroomsTotal,

@@ -20,7 +20,7 @@ interface Split { el: HTMLElement; box: HTMLElement; units: HTMLElement[]; width
 const splits = new Map<HTMLElement, Split>();
 
 function build(el: HTMLElement): Split {
-  const text = (el.textContent ?? '').replace(/\s+/g, ' ').trim();
+  const text = (el.textContent ?? '').replace(/[ \t\n\r]+/g, ' ').trim();
   const base: 'rtl' | 'ltr' = getComputedStyle(el).direction === 'rtl' ? 'rtl' : 'ltr';
   const arabicPage = (el.closest('[lang]') as HTMLElement | null)?.lang === 'ar';
   el.textContent = '';
@@ -142,6 +142,8 @@ export function initKinetic(root: ParentNode = document): () => void {
       });
       triggers.push(st);
     }
+    // triggers are created out of page order (pins come later): sort before measuring
+    ScrollTrigger.sort();
     ScrollTrigger.refresh();
   });
 

@@ -108,4 +108,4 @@ export const SPOTS: Spot[] = [
 ];
 
 export const LABELS = campus.labels as Record<string, number[]>;
-export const LABEL_H: Record<string, number> = { htb: 4.5, hta: 7, library: 4.5, yard: 0.5, eshkol: 10, gym: 9, court: 0.5 };
+export const LABEL_H: Record<string, number> = { htb: 4.5, hta: 7, library: 4.5, yard: 0.5, eshkol: 10, gym: 9, court: 0.5, gate: 0.5, stop: 0.5 };

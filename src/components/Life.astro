@@ -59,7 +59,8 @@ const quotes = TESTIMONIALS.filter((q) => q.lang === lang);
 
 <style>
   .life { padding-bottom: clamp(64px, 10vh, 120px); }
-  .life__head { max-width: 44rem; margin-bottom: clamp(32px, 6vh, 64px); }
+  .life__head { margin-bottom: clamp(32px, 6vh, 64px); }
+  .life__head > * { max-width: 44rem; }
   .life__head .lead { margin-top: 1em; }
   .life__strip {
     overflow-x: auto;
@@ -85,8 +86,11 @@ const quotes = TESTIMONIALS.filter((q) => q.lang === lang);
   .life__item :global(.ph img) { transition: opacity var(--dur-3) var(--ease-focus); }
   .life__item :global(.ph) { background-color: var(--g2); }
   .life__item :global(figcaption) { padding-top: 10px; max-width: 40ch; }
-  :global(html.story[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) { opacity: 0.7; transform: scale(0.94); }
-  :global(html.story[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) :global(.ph img) { opacity: 0.55; }
+  .life__item :global(.ph::after) { content: ''; position: absolute; inset: 0; background: rgba(12, 12, 11, 0); transition: background var(--dur-3) var(--ease-focus); pointer-events: none; }
+  @media (max-width: 1023px) {
+    :global(html.story[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) { transform: scale(0.94); }
+    :global(html.story[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) :global(.ph::after) { background: rgba(12, 12, 11, 0.45); }
+  }
   .life__ctrl { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 8px; }
   .life__btns { display: flex; gap: 8px; }
   .life__btn { width: 52px; padding: 0; justify-content: center; }

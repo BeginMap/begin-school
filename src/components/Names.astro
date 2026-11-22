@@ -130,7 +130,7 @@ const translit = (n: { ru: string; en: string }) => (lang === 'ru' ? n.ru : lang
     --focus: #efede8;
     animation: pop-in var(--dur-2) var(--ease-focus);
   }
-  [dir='rtl'] .nm-pop { padding: 16px 18px 14px 44px; }
+  :global([dir='rtl']) .nm-pop { padding: 16px 18px 14px 44px; }
   @keyframes pop-in { from { opacity: 0; transform: translateY(6px) scale(0.97); filter: blur(4px); } }
   .nm-pop p { margin: 0 0 4px; }
   .nm-pop__name { font-size: 1.6rem; font-weight: 800; font-style: italic; }

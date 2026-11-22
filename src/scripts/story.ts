@@ -41,10 +41,12 @@ export async function init(anim: boolean): Promise<Cleanup[]> {
     const { initCampus } = await import('./campus');
     cl.push(initCampus(anim));
   }
-  ScrollTrigger.refresh();
+  ScrollTrigger.sort(); ScrollTrigger.refresh();
   return cl;
 }
 
-export function refresh() { ScrollTrigger.refresh(); }
+export function refresh() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
 
 export function killAll() { ScrollTrigger.getAll().forEach((s) => s.kill()); }
+
+(window as any).__st = ScrollTrigger; // QA scripts

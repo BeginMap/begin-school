@@ -140,8 +140,8 @@ const other: Page = page === 'parents/' ? '' : 'parents/';
     transform-origin: top var(--origin, right);
     --focus: #141413;
   }
-  [dir='ltr'] .lang__list { --origin: right; }
-  [dir='rtl'] .lang__list { --origin: left; }
+  :global([dir='ltr']) .lang__list { --origin: right; }
+  :global([dir='rtl']) .lang__list { --origin: left; }
   .lang[open] .lang__list { animation: menu-in var(--dur-2) var(--ease-focus); }
   @keyframes menu-in {
     from { opacity: 0; transform: translateY(-6px) scale(0.96); filter: blur(4px); }

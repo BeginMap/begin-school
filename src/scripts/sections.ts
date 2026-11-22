@@ -18,7 +18,7 @@ export function initFocusPhotos(): Cleanup {
         io.unobserve(e.target);
       }
     }),
-    { rootMargin: '0px 0px -18% 0px', threshold: 0.2 },
+    { rootMargin: '0px 0px -6% 0px', threshold: 0.05 },
   );
   els.forEach((e) => io.observe(e));
   return () => io.disconnect();

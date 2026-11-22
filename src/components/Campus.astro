@@ -14,7 +14,7 @@ const pos = (x: number, y: number, h = 0) => {
   const [sx, sy] = project(x, y, h, cam);
   return `--x:${((sx / VB_W) * 100).toFixed(2)}%;--y:${((sy / VB_H) * 100).toFixed(2)}%`;
 };
-const labelKeys = ['htb', 'hta', 'library', 'yard', 'eshkol', 'gym', 'court'] as const;
+const labelKeys = ['htb', 'hta', 'library', 'yard', 'eshkol', 'gym', 'court', 'gate', 'stop'] as const;
 const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
 ---
 <section class="sec campus" id="campus" data-field="campus" aria-labelledby="campus-title">
@@ -92,12 +92,12 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
 
 <style>
   .campus { padding-bottom: clamp(48px, 8vh, 96px); }
-  .campus__head { max-width: 48rem; }
+  .campus__head > * { max-width: 48rem; }
   .campus__head .lead { margin-top: 1em; max-width: 40ch; }
   .campus__pin { position: relative; }
   .campus__stage {
     position: relative;
-    width: min(100%, 1180px, calc(88svh * 1000 / 900));
+    width: min(100%, 1180px, calc(78svh * 1000 / 900));
     margin-inline: auto;
     aspect-ratio: 1000 / 900;
   }
@@ -106,6 +106,7 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: calc(var(--header-h) + 8px);
   }
   .campus__svg {
     position: absolute;
@@ -173,7 +174,22 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
     0% { box-shadow: 0 0 0 0 rgba(239, 237, 232, 0.55); }
     70%, 100% { box-shadow: 0 0 0 14px rgba(239, 237, 232, 0); }
   }
-  .campus__hint { position: absolute; inset-inline-start: var(--pad); top: calc(var(--header-h) + 8px); color: var(--fg-muted); margin: 0; z-index: 2; }
+  .campus__hint {
+    position: absolute;
+    inset-inline-start: var(--pad);
+    bottom: 16px;
+    z-index: 2;
+    margin: 0;
+    padding: 6px 12px;
+    color: var(--fg);
+    background: rgba(12, 12, 11, 0.72);
+    border-radius: 999px;
+  }
+  .spot[data-spot="gate"] .spot__dot { background: var(--sail); animation-name: spot-pulse-red; }
+  @keyframes spot-pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(201, 54, 47, 0.6); }
+    70%, 100% { box-shadow: 0 0 0 14px rgba(201, 54, 47, 0); }
+  }
   @media (max-width: 600px) { .spot { width: 30px; height: 30px; margin: -15px 0 0 -15px; } .spot__dot { inset: 8px; } }
 
   .places { margin-top: clamp(32px, 6vh, 64px); }
@@ -220,7 +236,7 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
   @keyframes dlg-in { from { opacity: 0; transform: scale(0.97); filter: blur(6px); } }
   .pdlg__in { display: grid; grid-template-rows: auto 1fr auto; max-height: 94svh; }
   .pdlg__head { display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 20px; }
-  [dir='rtl'] .pdlg__head { padding: 12px 20px 12px 12px; }
+  :global([dir='rtl']) .pdlg__head { padding: 12px 20px 12px 12px; }
   .pdlg__title { font-size: 1.15rem; font-weight: 700; }
   .pdlg__close {
     margin-inline-start: auto;

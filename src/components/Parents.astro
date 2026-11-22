@@ -44,8 +44,8 @@ const phone = FACTS.phone.value ?? '';
           <p>{p.route.text}</p>
           <p class="small" data-unverified>{p.route.addressNote}</p>
           <p class="btnrow">
-            <a class="btn" href={MAPS.google} rel="noopener">{d.getting.google}</a>
-            <a class="btn" href={MAPS.waze} rel="noopener">{d.getting.waze}</a>
+            <a class="btn" href={MAPS.google} rel="noopener"><span>{d.getting.google}</span></a>
+            <a class="btn" href={MAPS.waze} rel="noopener"><span>{d.getting.waze}</span></a>
           </p>
         </section>
         <section class="blk" aria-labelledby="b-olim">

@@ -13,9 +13,9 @@ const pages = [['he', ''], ['ar', 'ar/'], ['ru', 'ru/'], ['en', 'en/'], ['he-par
 const rows = [];
 for (const [name, sub] of pages) {
   const file = path.join(OUT, `${name}${desktop ? '-desktop' : ''}.json`);
-  const args = ['lighthouse', BASE + sub, '--quiet', '--output=json', `--output-path=${file}`, `--chrome-path=${executablePath}`, '--chrome-flags=--headless=new', '--only-categories=performance,accessibility,best-practices,seo'];
+  const args = [path.join('node_modules', 'lighthouse', 'cli', 'index.js'), BASE + sub, '--quiet', '--output=json', `--output-path=${file}`, `--chrome-path=${executablePath}`, '--chrome-flags=--headless=new', '--only-categories=performance,accessibility,best-practices,seo'];
   if (desktop) args.push('--preset=desktop');
-  execFileSync('npx', args, { stdio: 'inherit', shell: true });
+  execFileSync(process.execPath, args, { stdio: 'inherit' });
   const r = JSON.parse(fs.readFileSync(file, 'utf8'));
   const c = r.categories, a = r.audits;
   const row = {

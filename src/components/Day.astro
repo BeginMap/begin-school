@@ -34,7 +34,8 @@ const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-b
 
 <style>
   .day { padding-bottom: clamp(48px, 8vh, 96px); }
-  .day__head { max-width: 46rem; margin-bottom: clamp(32px, 6vh, 64px); }
+  .day__head { margin-bottom: clamp(32px, 6vh, 64px); }
+  .day__head > * { max-width: 46rem; }
   .day__head .lead { margin-top: 1em; }
 
   /* Default (no JS, reduced motion): a calm vertical stack */
@@ -74,10 +75,12 @@ const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-b
 
   /* Pinned horizontal ride (JS adds .is-ride) */
   :global(.day__pin.is-ride) {
+    --card: min(62vw, 760px);
     height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-top: calc(var(--header-h) + 12px);
     overflow: hidden;
   }
   :global(.day__pin.is-ride) .day__track {
@@ -87,17 +90,17 @@ const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-b
     width: max-content;
     max-width: none;
     margin: 0;
-    padding-inline: var(--pad) 30vw;
+    padding-inline: var(--pad) calc((100vw - var(--card)) / 2);
     will-change: transform;
   }
   :global(.day__pin.is-ride) .day__step {
-    width: min(62vw, 760px);
+    width: var(--card);
     grid-template-columns: 1fr;
     align-items: start;
   }
   :global(.day__pin.is-ride) .day__step:nth-child(even) .day__ph { order: 0; }
-  :global(.day__pin.is-ride) .day__step:nth-child(even) { margin-top: 9vh; }
-  :global(.day__pin.is-ride) .day__ph { aspect-ratio: 16 / 10; max-height: 52svh; }
+  :global(.day__pin.is-ride) .day__step:nth-child(even) { margin-top: 6vh; }
+  :global(.day__pin.is-ride) .day__ph { aspect-ratio: 16 / 10; max-height: 46svh; }
   :global(.day__pin.is-ride) .day__bar {
     display: block;
     position: relative;
@@ -118,7 +121,7 @@ const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-b
     transform-origin: var(--o, left);
     transform: scaleX(0);
   }
-  [dir='rtl'] .day__bar-fill { --o: right; }
+  :global([dir='rtl']) .day__bar-fill { --o: right; }
   .day__tick {
     position: absolute;
     top: calc(50% - 5px);
@@ -134,14 +137,14 @@ const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-b
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: var(--sail);
-    box-shadow: 0 0 0 6px rgba(201, 54, 47, 0.22);
+    background: var(--fg);
+    box-shadow: 0 0 0 6px rgba(239, 237, 232, 0.18);
     transform: translateX(var(--yx, 0px));
   }
   @media (max-width: 760px) {
     .day__step { grid-template-columns: 1fr; }
     .day__step:nth-child(even) .day__ph { order: 0; }
-    :global(.day__pin.is-ride) .day__step { width: 84vw; }
+    :global(.day__pin.is-ride) { --card: 84vw; }
     :global(.day__pin.is-ride) .day__step:nth-child(even) { margin-top: 0; }
     :global(.day__pin.is-ride) .day__ph { aspect-ratio: 4 / 3; max-height: 46svh; }
   }

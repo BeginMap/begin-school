@@ -150,7 +150,9 @@
       "yard": "Courtyard",
       "eshkol": "Eshkol HaPais hall",
       "gym": "Sports hall",
-      "court": "Sports court"
+      "court": "Sports court",
+      "gate": "Entrance",
+      "stop": "Bus stop"
     },
     "spots": {
       "gate": "Main gate",
@@ -510,6 +512,7 @@
     "plaque-narkis": "The sign of the נרקיס classroom",
     "plaque-hatzav": "The sign of the חצב classroom",
     "plaque-tzivoni": "The sign of the צבעוני classroom",
-    "plan-route": "The school plan around the route from the entrance to the דולפין classroom"
+    "plan-route": "The school plan around the route from the entrance to the דולפין classroom",
+    "courtyard-tall": "The inner courtyard with the red sails and the middle school entrance"
   }
 }

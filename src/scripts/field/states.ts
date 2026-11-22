@@ -49,7 +49,7 @@ export const STATES: Record<string, FieldState> = {
   // 4 One day — the schedule grid, dark
   day: s({ freq: 9, angle: 0, warp: 0.06, grid: 1, fog: 0.25, contrast: 0.42, width: 1 }),
   // 5 Campus in lines — the plan takes the stage, field steps back
-  campus: s({ freq: 34, angle: -0.32, warp: 0.12, fog: 0.12, contrast: 0.26, width: 0.9, grain: 0.2 }),
+  campus: s({ freq: 22, angle: 0.95, warp: 0.25, fog: 0.3, contrast: 0.13, width: 0.9, grain: 0.2 }),
   // 6 Names — Red Sea waves, paper
   names: s({ freq: 20, angle: 0, warp: 0.55, fog: 0.22, contrast: 0.48, light: 1 }),
   // 7 Life — contours again, livelier

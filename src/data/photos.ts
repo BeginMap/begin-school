@@ -32,6 +32,7 @@ export const PHOTOS: PhotoDef[] = [
   { id: 'street-7', src: 'photos/street/street-7.jpg', plan: [1376, 1816] },
   // courtyard
   { id: 'courtyard-north', src: 'photos/courtyard-north-b.jpg', plan: [869, 929], color: true },
+  { id: 'courtyard-tall', src: 'photos/courtyard-north-b.jpg', plan: [869, 929], color: true, crop: [0.3, 0, 0.42, 1] },
   { id: 'courtyard-east', src: 'photos/courtyard-east-b.jpg', plan: [1227, 992] },
   { id: 'yard-1', src: 'photos/yard/yard-1-c.jpg', plan: [826, 1078] },
   { id: 'yard-3', src: 'photos/yard/yard-3-c.jpg', plan: [826, 1078], color: true },

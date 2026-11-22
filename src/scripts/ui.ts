@@ -113,6 +113,8 @@ export function initProgress(): Cleanup {
     let cur = -1;
     tops.forEach((t, i) => { if (y + innerHeight * 0.5 >= t) cur = i; });
     items.forEach((it, i) => it.classList.toggle('is-cur', i === cur));
+    const id = cur >= 0 ? items[cur].dataset.progressItem : '';
+    nav.classList.toggle('is-dim', id === 'day' || id === 'life' || id === 'campus');
   };
   const on = () => { if (!raf) raf = requestAnimationFrame(update); };
   addEventListener('scroll', on, { passive: true });

@@ -36,6 +36,8 @@ const items = [
     transition: color var(--dur-2) linear, opacity var(--dur-2) linear;
   }
   :global(html[data-on-light='1']) .prog { color: #141413; }
+  .prog.is-dim { opacity: 0.3; }
+  .prog.is-dim:hover, .prog.is-dim:focus-within { opacity: 1; }
   .prog__line, .prog__fill {
     position: absolute;
     inset-inline-start: 11px;
@@ -83,7 +85,7 @@ const items = [
     pointer-events: none;
     transition: opacity var(--dur-1) linear, transform var(--dur-2) var(--ease-focus);
   }
-  [dir='rtl'] .prog__label { --lx: -6px; }
+  :global([dir='rtl']) .prog__label { --lx: -6px; }
   .prog__link:hover .prog__label, .prog__link:focus-visible .prog__label { opacity: 1; --lx: 0px; }
   .prog__you {
     position: absolute;

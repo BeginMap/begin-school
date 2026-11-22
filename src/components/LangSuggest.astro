@@ -10,7 +10,7 @@ const offers = LANGS.filter((l) => l !== lang).map((l) => ({ l, url: href(l, pag
     <div class="ls__card" data-offer={o.l} lang={o.l} dir={DIR[o.l]} hidden role="region" aria-label={NATIVE[o.l]}>
       <p class="ls__text">{o.text}</p>
       <div class="ls__acts">
-        <a class="btn ls__yes" href={o.url} data-lang-link={o.l}>{o.yes}</a>
+        <a class="btn ls__yes" href={o.url} data-lang-link={o.l}><span>{o.yes}</span></a>
         <button class="ls__no" type="button" data-suggest-close>{o.no}</button>
       </div>
     </div>

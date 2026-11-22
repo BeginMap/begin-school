@@ -15,7 +15,7 @@ const photos = ['gate-2', 'courtyard-north', 'door-dolphin', 'yard-14', 'board-b
   <div class="day__pin" data-day>
     <ol class="day__track" role="list" data-day-track>
       {d.day.steps.map((s, i) => (
-        <li class="day__step" style={`--i:${i}`}>
+        <li class="day__step" style={`--i:${i}`} data-focus>
           <Photo id={photos[i]} lang={lang} class="day__ph" sizes="(max-width: 760px) 86vw, 46vw" />
           <div class="day__txt">
             <h3 class="day__t"><span class="day__n" aria-hidden="true">{i + 1}</span>{s.title}</h3>

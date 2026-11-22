@@ -41,6 +41,7 @@ Short log of taste and technical decisions taken without asking, with the reason
 - **"For parents"** is a separate page per language (`/parents/`), plus a parents column in the FAQ. "Privacy" and a four-language 404 exist.
 - **Campus in lines = SVG, not WebGL lines.** 33 Begin Map building rings (≈420 points) are projected on the CPU each frame of the camera flight (plan → fly over gate and courtyard → 3D pull-back). Cost ≈ 0.3 ms per frame; crisp at any DPR; the same function renders a static SVG at build time for no-JS. Photo hotspots are real `<button>`s; a "places" list under the plan is the accessible alternative and the no-JS fallback (native `<details>`).
 - **Day ride** is a pinned horizontal track, mirrored in RTL. Without motion it is a vertical stack. No bell times anywhere.
+- **Side progress line** (desktop/tablet ≥ 900 px): one tick per section, the red "you are here" dot travels down it, hovering a tick shows the section title. It doubles as an anchor navigation (`<nav>` with real links) for a 12-section page.
 - **Route in the phone** is computed, not drawn: A* over Begin Map's walk grid (`data/walk.json`) from the main entrance to the door of דולפין.
 
 ## Facts and content

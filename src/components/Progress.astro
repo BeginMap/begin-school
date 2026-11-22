@@ -1,0 +1,101 @@
+---
+// A thin line along the page edge: one tick per story section, a red "you are here" dot.
+// It is also a real navigation list (anchor links), hidden on small screens.
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const items = [
+  ['years', d.years.title], ['changes', d.changes.title], ['day', d.day.title], ['campus', d.campus.title],
+  ['names', d.names.title], ['life', d.life.title], ['beginmap', d.map.title], ['safe', d.safe.title],
+  ['getting', d.getting.title], ['faq', d.faq.title], ['finale', d.finale.title],
+];
+---
+<nav class="prog" aria-label={d.ui.sections} data-progress>
+  <span class="prog__line" aria-hidden="true"><span class="prog__fill" data-progress-fill></span></span>
+  <ol class="prog__list" role="list">
+    {items.map(([id, title]) => (
+      <li class="prog__item" data-progress-item={id}>
+        <a class="prog__link" href={`#${id}`}><span class="prog__label">{title.replace(/ /g, ' ')}</span></a>
+      </li>
+    ))}
+  </ol>
+  <span class="prog__you" aria-hidden="true" data-progress-you></span>
+</nav>
+
+<style>
+  .prog {
+    position: fixed;
+    z-index: 40;
+    inset-inline-end: 14px;
+    top: 50%;
+    height: 46vh;
+    width: 24px;
+    transform: translateY(-50%);
+    color: var(--fg);
+    transition: color var(--dur-2) linear, opacity var(--dur-2) linear;
+  }
+  :global(html[data-on-light='1']) .prog { color: #141413; }
+  .prog__line, .prog__fill {
+    position: absolute;
+    inset-inline-start: 11px;
+    top: 0;
+    width: 1.5px;
+    height: 100%;
+    background: currentColor;
+    opacity: 0.25;
+  }
+  .prog__fill { opacity: 0.9; transform-origin: top; transform: scaleY(var(--p, 0)); inset-inline-start: 0; }
+  .prog__list { position: absolute; inset: 0; }
+  .prog__item { position: absolute; inset-inline-start: 0; top: calc(var(--t, 0) * 100%); transform: translateY(-50%); }
+  .prog__link {
+    position: relative;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  .prog__link::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 7px;
+    top: 11px;
+    width: 10px;
+    height: 1.5px;
+    background: currentColor;
+    opacity: 0.6;
+    transition: width var(--dur-2) var(--ease-focus), opacity var(--dur-2) linear;
+  }
+  .prog__link:hover::before, .prog__link:focus-visible::before, .prog__item.is-cur .prog__link::before { width: 16px; inset-inline-start: 4px; opacity: 1; }
+  .prog__label {
+    position: absolute;
+    inset-inline-end: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%) translateX(var(--lx, 6px));
+    padding: 4px 10px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: var(--ink);
+    color: #efede8;
+    border-radius: 999px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-1) linear, transform var(--dur-2) var(--ease-focus);
+  }
+  [dir='rtl'] .prog__label { --lx: -6px; }
+  .prog__link:hover .prog__label, .prog__link:focus-visible .prog__label { opacity: 1; --lx: 0px; }
+  .prog__you {
+    position: absolute;
+    inset-inline-start: 6px;
+    top: calc(var(--p, 0) * 100% - 6px);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--sail);
+    box-shadow: 0 0 0 5px rgba(201, 54, 47, 0.2);
+    pointer-events: none;
+  }
+  @media (max-width: 900px), (max-height: 560px) { .prog { display: none; } }
+  @media print { .prog { display: none; } }
+</style>

@@ -21,7 +21,7 @@ const minY = Math.min(...all.map((p) => p[1])) - 40, maxY = Math.max(...all.map(
       <p class="lead">{d.safe.lead}</p>
       <dl class="safe__list">
         {d.safe.items.map((it) => (
-          <div class="safe__item">
+          <div class="safe__item" data-focus>
             <dt>{it.title}</dt>
             <dd>{it.text}</dd>
           </div>

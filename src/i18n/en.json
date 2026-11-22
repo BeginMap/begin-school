@@ -1,17 +1,17 @@
 {
   "meta": {
-    "siteName": "Begin School, Eilat — meet the school",
+    "siteName": "Begin School, Eilat — meet the school",
     "title": "Hi, future 7th grader! Begin School, Eilat",
-    "description": "Meet Begin School in Eilat — for kids starting 7th grade (ז׳) in September and their parents: how the school works, what a day looks like, where everything is.",
+    "description": "Meet Begin School in Eilat — for kids starting 7th grade (ז׳) in September and their parents: how the school works, what a day looks like, where everything is.",
     "ogAlt": "The Begin School courtyard with its three red shade sails",
-    "parentsTitle": "For parents — Begin School, Eilat",
+    "parentsTitle": "For parents — Begin School, Eilat",
     "parentsDescription": "Starting 7th grade at Begin School in Eilat: how the school is organised, safety, getting there, registration, and what we are still checking with the school.",
-    "privacyTitle": "Privacy — Begin School, Eilat",
+    "privacyTitle": "Privacy — Begin School, Eilat",
     "privacyDescription": "This site uses no cookies, collects no data and runs no trackers."
   },
   "ui": {
     "skip": "Skip to content",
-    "homeLabel": "Begin — home",
+    "homeLabel": "Begin — home",
     "mark": "Begin",
     "city": "Eilat",
     "navLabel": "Main menu",
@@ -33,19 +33,20 @@
     "next": "Next",
     "newTab": "opens in a new tab",
     "scrollHint": "Scroll down",
-    "toTop": "Back to top"
+    "toTop": "Back to top",
+    "sections": "Page sections"
   },
   "hero": {
     "title": [
       "Hi there,",
       "future 7th grader"
     ],
-    "lead": "At first, a new school is a bit of a blur: a big building, lots of teachers, no idea what's where. Scroll down — every screen gets a little sharper.",
+    "lead": "At first, a new school is a bit of a blur: a big building, lots of teachers, no idea what's where. Scroll down — every screen gets a little sharper.",
     "hint": "Scroll down"
   },
   "years": {
     "title": "Six years, one school",
-    "lead": "Begin runs from 7th grade (ז׳) to 12th (י״ב). After 9th grade you don't switch schools — you just move up to the upper school.",
+    "lead": "Begin runs from 7th grade (ז׳) to 12th (י״ב). After 9th grade you don't switch schools — you just move up to the upper school.",
     "now": "you are here now",
     "soon": "here in September",
     "small": [
@@ -70,7 +71,7 @@
   },
   "changes": {
     "title": "What changes after 6th grade",
-    "lead": "Lots of things will be new. That's true for everyone moving up to 7th grade — and it's completely fine.",
+    "lead": "Lots of things will be new. That's true for everyone moving up to 7th grade — and it's completely fine.",
     "was": "before",
     "now": "now",
     "items": [
@@ -80,11 +81,11 @@
       },
       {
         "was": "Your teacher is always around.",
-        "now": "Every class has a מחנך or מחנכת — a homeroom teacher. You'll have fewer lessons with them, but they're your grown-up at school: you can go to them with any question."
+        "now": "Every class has a מחנך or מחנכת — a homeroom teacher. You'll have fewer lessons with them, but they're your grown-up at school: you can go to them with any question."
       },
       {
         "was": "When things are hard, you go to your teacher.",
-        "now": "There's a יועצת — a school counsellor. You can talk to her when something is hard, scary or just confusing."
+        "now": "There's a יועצת — a school counsellor. You can talk to her when something is hard, scary or just confusing."
       },
       {
         "was": "Your teacher knows the timetable.",
@@ -92,7 +93,7 @@
       },
       {
         "was": "You've known your whole class since 1st grade.",
-        "now": "Classes are made up of kids from different schools. At first you'll hardly know anyone — and they won't know anyone either."
+        "now": "Classes are made up of kids from different schools. At first you'll hardly know anyone — and they won't know anyone either."
       },
       {
         "was": "Quizzes and your teacher's feedback.",
@@ -108,7 +109,7 @@
     "steps": [
       {
         "title": "Morning: the gate",
-        "text": "You come in from Malkat Shva Street (מלכת שבא). Above the gate is a sign with a portrait of Menachem Begin — the school is named after him."
+        "text": "You come in from Malkat Shva Street (מלכת שבא). Above the gate is a sign with a portrait of Menachem Begin — the school is named after him."
       },
       {
         "title": "The courtyard",
@@ -116,7 +117,7 @@
       },
       {
         "title": "Lesson time",
-        "text": "Classrooms have names, not just numbers. This door says דולפין — dolphin."
+        "text": "Classrooms have names, not just numbers. This door says דולפין — dolphin."
       },
       {
         "title": "Break",
@@ -166,7 +167,7 @@
   },
   "names": {
     "title": "Every classroom has a name",
-    "lead": "Here classrooms aren't just numbers. The door signs show birds, flowers, sea creatures, trees, places in the Negev and the Arava, heroes of the Tanakh (the Hebrew Bible) and even aircraft. Maybe your class will be called דולפין — Dolphin.",
+    "lead": "Here classrooms aren't just numbers. The door signs show birds, flowers, sea creatures, trees, places in the Negev and the Arava, heroes of the Tanakh (the Hebrew Bible) and even aircraft. Maybe your class will be called דולפין — Dolphin.",
     "hint": "Tap a name to find out what it means.",
     "doorCaption": "This is the door of the דולפין classroom.",
     "plaquesCaption": "Door signs: כלנית, אירוס, נרקיס, חצב, צבעוני.",
@@ -182,7 +183,7 @@
     },
     "meanings": {
       "dror": "sparrow",
-      "tzofit": "sunbird — a tiny bird with a curved beak",
+      "tzofit": "sunbird — a tiny bird with a curved beak",
       "anafa": "heron",
       "afroni": "lark",
       "shachaf": "seagull",
@@ -192,7 +193,7 @@
       "nurit": "buttercup",
       "vered": "rose",
       "narkis": "narcissus",
-      "hatzav": "sea squill — it blooms at the end of summer",
+      "hatzav": "sea squill — it blooms at the end of summer",
       "tzvoni": "tulip",
       "marganit": "scarlet pimpernel, a tiny wildflower",
       "lilach": "lilac",
@@ -220,11 +221,11 @@
       "ramon": "the Ramon crater",
       "shchorot": "Nahal Shchoret, near Eilat",
       "rudad": "Nahal Roded, near Eilat",
-      "dvora": "Deborah — a prophet and judge",
-      "barak": "Barak — the army commander in Deborah's time",
-      "ahud": "Ehud — a judge",
-      "yiftach": "Jephthah — a judge",
-      "yotam": "Jotham — son of Gideon",
+      "dvora": "Deborah — a prophet and judge",
+      "barak": "Barak — the army commander in Deborah's time",
+      "ahud": "Ehud — a judge",
+      "yiftach": "Jephthah — a judge",
+      "yotam": "Jotham — son of Gideon",
       "kfir": "young lion; also an Israeli jet",
       "lavi": "lion; also an Israeli jet",
       "adir": "mighty; the Israeli Air Force name for the F-35",
@@ -240,7 +241,7 @@
   },
   "map": {
     "title": "You won't get lost",
-    "lead": "Begin has its own map — the Begin Map. Type the name of a classroom and it guides you from the entrance to the door.",
+    "lead": "Begin has its own map — the Begin Map. Type the name of a classroom and it guides you from the entrance to the door.",
     "features": [
       "Search by classroom name",
       "Routes inside the school",
@@ -267,7 +268,7 @@
       },
       {
         "title": "A sign at the gate",
-        "text": "“This school has a safe room open to the public” — that's what the sign at the entrance says."
+        "text": "“This school has a safe room open to the public” — that's what the sign at the entrance says."
       },
       {
         "title": "Who to go to",
@@ -315,7 +316,7 @@
       },
       {
         "q": "Who is my grown-up at school?",
-        "a": "Your homeroom teacher — the מחנך or מחנכת. There's also the יועצת, the school counsellor: you can talk to her about anything."
+        "a": "Your homeroom teacher — the מחנך or מחנכת. There's also the יועצת, the school counsellor: you can talk to her about anything."
       },
       {
         "q": "When do the bells ring, and how many lessons are there?",
@@ -360,7 +361,7 @@
     "address": "Malkat Shva Street (מלכת שבא), Eilat"
   },
   "footer": {
-    "name": "Begin School, Eilat — meet the school",
+    "name": "Begin School, Eilat — meet the school",
     "unofficial": "This site was made by the Begin Map team and is not the school's official website. Please check details with the school.",
     "privacy": "Privacy",
     "credit": "Photos and plan: Begin Map.",
@@ -378,7 +379,7 @@
       "title": "What changes in 7th grade",
       "text": "Instead of one main teacher, there is a teacher for each subject. Each class has a homeroom teacher (מחנך/מחנכת), and the school has counsellors (יועצות). New for students: a timetable with many subjects (מערכת שעות), tests and a report card (תעודה). Classes are made up of children from different elementary schools.",
       "tips": [
-        "Ask your child what worries them most — sometimes it's something small, like “Where are the toilets?”",
+        "Ask your child what worries them most — sometimes it's something small, like “Where are the toilets?”",
         "Walk the route from home to the school gate together before the year starts.",
         "Open the Begin Map together and find the key places: the middle school entrance, the library, the safe room."
       ]
@@ -395,7 +396,7 @@
     "route": {
       "title": "Getting there",
       "text": "Malkat Shva Street (מלכת שבא). The bus stop “תיכון בגין / מלכת שבא” is right by the school. Parking by the gate, with accessible spaces.",
-      "addressNote": "Sources give different house numbers (2 and 28) — we're checking with the school."
+      "addressNote": "Sources give different house numbers (2 and 28) — we're checking with the school."
     },
     "olim": {
       "title": "For new immigrants",
@@ -436,7 +437,7 @@
       },
       {
         "title": "What your browser stores",
-        "text": "Only two of your choices — language and “animation on/off”. They stay in your browser's localStorage and are never sent anywhere. Clearing the site's data removes them."
+        "text": "Only two of your choices — language and “animation on/off”. They stay in your browser's localStorage and are never sent anywhere. Clearing the site's data removes them."
       },
       {
         "title": "Fonts and images",

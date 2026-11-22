@@ -302,3 +302,17 @@ export function initFinale(): Cleanup {
   });
   return () => { st.kill(); fig.style.removeProperty('--b'); fig.style.removeProperty('--c'); };
 }
+
+/** Light parallax: the picture inside a photo frame drifts slower than the page. */
+export function initParallax(): Cleanup {
+  const pics = Array.from(document.querySelectorAll<HTMLElement>('.ph[data-parallax] picture'));
+  const tweens = pics.map((pic) =>
+    gsap.fromTo(pic, { yPercent: -5, scale: 1.12 }, {
+      yPercent: 5,
+      scale: 1.12,
+      ease: 'none',
+      scrollTrigger: { trigger: pic.parentElement!, start: 'top bottom', end: 'bottom top', scrub: 0.4 },
+    }),
+  );
+  return () => tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); gsap.set(t.targets(), { clearProps: 'transform' }); });
+}

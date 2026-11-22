@@ -26,7 +26,7 @@ const quotes = TESTIMONIALS.filter((q) => q.lang === lang);
   <div class="life__strip" data-life tabindex="0" role="region" aria-label={d.life.title}>
     <ul class="life__list" role="list">
       {strip.map((p) => (
-        <li class={`life__item life__item--${p.k}`} data-life-item>
+        <li class={`life__item life__item--${p.k}`} data-life-item data-focus>
           <Photo id={p.id} lang={lang} caption credit sizes={p.k === 'tall' ? '(max-width: 760px) 70vw, 30vw' : '(max-width: 760px) 86vw, 48vw'} focus={false} />
         </li>
       ))}
@@ -85,8 +85,8 @@ const quotes = TESTIMONIALS.filter((q) => q.lang === lang);
   .life__item :global(.ph img) { transition: opacity var(--dur-3) var(--ease-focus); }
   .life__item :global(.ph) { background-color: var(--g2); }
   .life__item :global(figcaption) { padding-top: 10px; max-width: 40ch; }
-  :global(html.js[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) { opacity: 0.7; transform: scale(0.94); }
-  :global(html.js[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) :global(.ph img) { opacity: 0.55; }
+  :global(html.story[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) { opacity: 0.7; transform: scale(0.94); }
+  :global(html.story[data-motion='on']) .life__strip.is-live .life__item:not(.is-center) :global(.ph img) { opacity: 0.55; }
   .life__ctrl { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 8px; }
   .life__btns { display: flex; gap: 8px; }
   .life__btn { width: 52px; padding: 0; justify-content: center; }

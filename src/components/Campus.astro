@@ -122,10 +122,10 @@ const labelText = (k: (typeof labelKeys)[number]) => d.campus.labels[k];
   .c-base { stroke: var(--g6); stroke-width: 1; }
   .c-walls { stroke: var(--g6); stroke-width: 0.8; opacity: 0.55; }
   .c-roofs { stroke: var(--fg); stroke-width: 1.3; }
-  :global(html.js[data-motion='on']) .campus__svg:not(.is-drawn) path { stroke-dashoffset: 1; }
-  :global(html.js[data-motion='on']) .campus__svg path { transition: stroke-dashoffset 2.4s var(--ease-move); }
-  :global(html.js[data-motion='on']) .campus__svg .c-base { transition-delay: 0.2s; }
-  :global(html.js[data-motion='on']) .campus__svg .c-roofs { transition-delay: 0.5s; }
+  :global(html.story[data-motion='on']) .campus__svg:not(.is-drawn) path { stroke-dashoffset: 1; }
+  :global(html.story[data-motion='on']) .campus__svg path { transition: stroke-dashoffset 2.4s var(--ease-move); }
+  :global(html.story[data-motion='on']) .campus__svg .c-base { transition-delay: 0.2s; }
+  :global(html.story[data-motion='on']) .campus__svg .c-roofs { transition-delay: 0.5s; }
 
   .campus__labels, .campus__spots { position: absolute; inset: 0; pointer-events: none; }
   .clabel {

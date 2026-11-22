@@ -100,8 +100,8 @@ const grades = ['ו׳', 'ז׳', 'ח׳', 'ט׳', 'י׳', 'י״א', 'י״ב'];
     opacity: 1;
   }
   .yr--hta .yr__line { opacity: 0.5; }
-  :global(html.js[data-motion='on']) .yrs:not(.is-drawn) .yr__line { transform: scaleX(0); }
-  :global(html.js[data-motion='on']) .yrs .yr__line {
+  :global(html.story[data-motion='on']) .yrs:not(.is-drawn) .yr__line { transform: scaleX(0); }
+  :global(html.story[data-motion='on']) .yrs .yr__line {
     transition: transform 1.1s var(--ease-focus);
     transition-delay: calc(var(--i) * 90ms);
   }

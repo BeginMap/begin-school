@@ -1,6 +1,5 @@
 // Header, language switching, first-visit language offer, magnetic buttons and the focus-lens cursor.
-import { gsap } from './motion';
-import { store, finePointer, motionOn } from './prefs';
+import { store, motionOn } from './prefs';
 import type { Field } from './field/field';
 
 type Cleanup = () => void;
@@ -89,50 +88,37 @@ export function initMotionToggle(apply: (on: boolean) => void): Cleanup {
   return () => btn.removeEventListener('click', onClick);
 }
 
-/** Buttons lean towards the pointer (fine pointers only). */
-export function initMagnetic(): Cleanup {
-  if (!finePointer() || !motionOn()) return () => {};
-  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-magnetic]'));
-  const offs: Cleanup[] = [];
-  for (const el of els) {
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'expo.out' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'expo.out' });
-    const move = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect();
-      xTo((e.clientX - (r.left + r.width / 2)) * 0.22);
-      yTo((e.clientY - (r.top + r.height / 2)) * 0.3);
-    };
-    const leave = () => { xTo(0); yTo(0); };
-    el.addEventListener('pointermove', move);
-    el.addEventListener('pointerleave', leave);
-    offs.push(() => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', leave); gsap.set(el, { x: 0, y: 0 }); });
-  }
-  return () => offs.forEach((f) => f());
-}
-
-/** A soft focus lens follows a fine pointer and opens up over links and buttons. The system cursor stays. */
-let lens: HTMLElement | null = null;
-export function initLens(): Cleanup {
-  if (!finePointer() || !motionOn()) { lens?.remove(); lens = null; return () => {}; }
-  if (!lens) {
-    lens = document.createElement('div');
-    lens.className = 'lens';
-    lens.setAttribute('aria-hidden', 'true');
-    document.body.append(lens);
-  }
-  const el = lens;
-  const xTo = gsap.quickTo(el, 'x', { duration: 0.35, ease: 'power3.out' });
-  const yTo = gsap.quickTo(el, 'y', { duration: 0.35, ease: 'power3.out' });
-  const move = (e: PointerEvent) => {
-    if (e.pointerType !== 'mouse') return;
-    el.classList.add('is-on');
-    xTo(e.clientX);
-    yTo(e.clientY);
-    const hot = (e.target as HTMLElement).closest?.('a, button, summary, [data-focus], .spot');
-    el.classList.toggle('is-hot', !!hot);
+/** Side progress line: ticks at section starts, a red dot for 'you are here', current section highlighted. */
+export function initProgress(): Cleanup {
+  const nav = document.querySelector<HTMLElement>('[data-progress]');
+  if (!nav) return () => {};
+  const items = Array.from(nav.querySelectorAll<HTMLElement>('[data-progress-item]'));
+  let tops: number[] = [];
+  let max = 1;
+  const measure = () => {
+    max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    tops = items.map((it) => {
+      const el = document.getElementById(it.dataset.progressItem!);
+      const top = el ? el.getBoundingClientRect().top + scrollY : 0;
+      it.style.setProperty('--t', String(Math.min(1, top / max)));
+      return top;
+    });
+    update();
   };
-  const out = () => el.classList.remove('is-on');
-  addEventListener('pointermove', move, { passive: true });
-  document.addEventListener('pointerleave', out);
-  return () => { removeEventListener('pointermove', move); document.removeEventListener('pointerleave', out); };
+  let raf = 0;
+  const update = () => {
+    raf = 0;
+    const y = scrollY;
+    nav.style.setProperty('--p', String(Math.min(1, Math.max(0, y / max))));
+    let cur = -1;
+    tops.forEach((t, i) => { if (y + innerHeight * 0.5 >= t) cur = i; });
+    items.forEach((it, i) => it.classList.toggle('is-cur', i === cur));
+  };
+  const on = () => { if (!raf) raf = requestAnimationFrame(update); };
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', measure);
+  const ro = new ResizeObserver(measure);
+  ro.observe(document.body);
+  measure();
+  return () => { removeEventListener('scroll', on); removeEventListener('resize', measure); ro.disconnect(); cancelAnimationFrame(raf); };
 }

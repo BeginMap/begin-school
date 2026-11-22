@@ -64,7 +64,7 @@ const set = (fmt2: string, c: string) => img.widths.map((w: number) => `${base}i
   }
   .finale__c { opacity: var(--c, 1); }
   .finale__bw { filter: blur(var(--b, 0px)); }
-  :global(html.js[data-motion='on']) .finale__ph { --c: 0; --b: 10px; }
+  :global(html.story[data-motion='on']) .finale__ph { --c: 0; --b: 10px; }
   .finale__in { position: relative; }
   .finale__title {
     font-size: var(--fs-hero);

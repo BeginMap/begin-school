@@ -1,21 +1,32 @@
 // Entry point. Runs once per full page load; Astro's client router swaps pages around the
 // persistent <canvas id="field">, so the living background survives section and language changes.
+// Kept small on purpose: the scroll story (GSAP, Lenis, sections) is a lazy chunk (story.ts).
 import { Field } from './field/field';
-import { ScrollTrigger } from './motion';
-import { applyMotionAttr, motionOn, finePointer, onSystemMotionChange } from './prefs';
-import { initKinetic } from './kinetic';
-import { initFocusPhotos, initYears, initChanges, initDay, initNames, initLife, initRoute, initFinale } from './sections';
-import { initHeader, initLangLinks, initLangSuggest, initMotionToggle, initMagnetic, initLens } from './ui';
-import Lenis from 'lenis';
+import { applyMotionAttr, motionOn, onSystemMotionChange } from './prefs';
+import { initHeader, initLangLinks, initLangSuggest, initMotionToggle, initProgress } from './ui';
 
 type Cleanup = () => void;
+type Story = typeof import('./story');
 const html = document.documentElement;
 
 let field: Field | null = null;
-let lenis: Lenis | null = null;
+let fieldFailed = false;
+let story: Story | null = null;
+let storyLoading: Promise<Story> | null = null;
 let pageCleanups: Cleanup[] = [];
 let firstLoad = true;
-let fieldFailed = false;
+let generation = 0;
+
+const idle = (cb: () => void, timeout = 900) => {
+  const ric = (window as any).requestIdleCallback as ((cb: () => void, o: { timeout: number }) => void) | undefined;
+  if (ric) ric(cb, { timeout }); else setTimeout(cb, 120);
+};
+
+function loadStory(): Promise<Story> {
+  if (story) return Promise.resolve(story);
+  storyLoading ??= import('./story').then((m) => { story = m; m.setupLenis(); return m; });
+  return storyLoading;
+}
 
 // ------------------------------------------------------------------ living background
 function startField() {
@@ -39,53 +50,32 @@ function startField() {
   tryIntro();
 }
 
-// ------------------------------------------------------------------ smooth scroll (desktop, fine pointer only)
-function setupLenis() {
-  const want = finePointer() && motionOn();
-  if (want && !lenis) {
-    lenis = new Lenis({ duration: 1.05, easing: (t) => 1 - Math.pow(1 - t, 3), wheelMultiplier: 1, touchMultiplier: 1 });
-    lenis.on('scroll', ScrollTrigger.update);
-    const raf = (time: number) => { lenis?.raf(time); if (lenis) requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-    (window as any).__lenis = lenis;
-  } else if (!want && lenis) {
-    lenis.destroy();
-    lenis = null;
-  }
-}
-
 // ------------------------------------------------------------------ page modules
 async function initPage() {
+  const gen = ++generation;
   const anim = motionOn();
-  const cl: Cleanup[] = [];
-  cl.push(initHeader(), initLangLinks(field), initLangSuggest(), initMotionToggle(onMotion));
-  cl.push(initFocusPhotos());
-  if (anim) {
-    cl.push(initKinetic(), initYears(), initChanges(), initDay(), initNames(), initLife(), initRoute(), initFinale(), initMagnetic(), initLens());
-  } else {
-    cl.push(initLife());
-  }
-  if (document.querySelector('[data-campus]')) {
-    const { initCampus } = await import('./campus');
-    cl.push(initCampus(anim));
-  }
+  const cl: Cleanup[] = [initHeader(), initLangLinks(field), initLangSuggest(), initMotionToggle(onMotion), initProgress()];
   pageCleanups = cl;
   field?.measure();
-  ScrollTrigger.refresh();
-  // re-measure once images and fonts have settled
-  (document as any).fonts?.ready?.then(() => { field?.measure(); ScrollTrigger.refresh(); });
-  addEventListener('load', () => { field?.measure(); ScrollTrigger.refresh(); }, { once: true });
+  const s = await loadStory();
+  if (gen !== generation) return; // a newer page replaced this one while the chunk loaded
+  const more = await s.init(anim);
+  if (gen !== generation) { more.forEach((c) => c()); return; }
+  cl.push(...more);
+  field?.measure();
+  (document as any).fonts?.ready?.then(() => { if (gen === generation) { field?.measure(); s.refresh(); } });
 }
 
 function teardownPage() {
+  generation++;
   pageCleanups.forEach((c) => { try { c(); } catch (e) { console.warn(e); } });
   pageCleanups = [];
-  ScrollTrigger.getAll().forEach((s) => s.kill());
+  story?.killAll();
 }
 
 function onMotion(on: boolean) {
   field?.setStill(!on, true);
-  setupLenis();
+  story?.setupLenis();
   teardownPage();
   initPage();
 }
@@ -109,11 +99,11 @@ document.addEventListener('astro:page-load', () => {
   if (firstLoad) {
     firstLoad = false;
     skipIntroOnce();
-    setupLenis();
-    // the field is decorative: start it after the first paint so text (LCP) is never delayed
-    const idle = (window as any).requestIdleCallback || ((cb: () => void) => setTimeout(cb, 200));
-    requestAnimationFrame(() => idle(startField, { timeout: 900 }));
     onSystemMotionChange(() => { applyMotionAttr(); onMotion(motionOn()); });
+    // decorative work starts after the first paint, so text (LCP) never waits for it
+    requestAnimationFrame(() => idle(() => { startField(); initPage(); }));
+    addEventListener('load', () => { field?.measure(); story?.refresh(); }, { once: true });
+    return;
   }
   initPage();
 });
@@ -123,11 +113,11 @@ document.addEventListener('astro:before-swap', () => teardownPage());
 document.addEventListener('astro:after-swap', () => {
   // the router replaces <html> attributes: restore runtime state
   html.classList.add('js');
+  if (story) html.classList.add('story');
   if (field?.ready) html.classList.add('field-on');
   if (fieldFailed) html.classList.add('field-fallback');
   applyMotionAttr();
-  lenis?.resize();
-  if (!motionOn()) scrollTo(0, scrollY);
+  story?.afterSwap();
 });
 
 // a language switch delays the swap a little, so the text changes while the wave sweeps across

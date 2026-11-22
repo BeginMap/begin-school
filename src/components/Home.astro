@@ -12,6 +12,7 @@ import Safe from './Safe.astro';
 import Getting from './Getting.astro';
 import Faq from './Faq.astro';
 import Finale from './Finale.astro';
+import Progress from './Progress.astro';
 import { t, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -35,6 +36,7 @@ const d = t(lang);
     </div>
   </section>
   <Finale lang={lang} />
+  <Progress lang={lang} />
 </Base>
 
 <style>
